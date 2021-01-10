@@ -1,0 +1,33 @@
+<div class="max-expanded">
+  <div class="title-panel">
+    <div style="float: left;padding: 15px 10px 10px 20px; color: white;">
+      <a class="register-btn" routerLink="/login"><i class="fas fa-sign-in-alt"></i><span
+          style="margin-left:5px">Register/Login</span></a>
+    </div>
+    <a class="title" routerLink="/">{{title}}</a>
+  </div>
+  <div class="menu-and-content">
+    <div class="vertical-menu" [ngClass]="isOpenMenu?'menu-opened':'menu-closed'">
+      <button class="btn" (click)="menuToggle();"><i class="fas fa-bars"></i></button>
+      <app-menu [isOpenMenu]="isOpenMenu" (openMenu)="menuToggle();"></app-menu>
+    </div>
+    <div class="content" [ngClass]="{'min-content':isOpenMenu}">
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+      <div id="footer">
+        <div class="row" style="margin: 0px;">
+          <div class="col-md-6 col-xs-12" style="margin-bottom:15px;">
+            Pastel Rainbow <br>
+            Grey Lavender Colors
+          </div>
+          <div class="col-md-6 col-xs-12">
+            Never Doub <br>
+            Never Dreamed Of This
+            Uonto sdilo dsort
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

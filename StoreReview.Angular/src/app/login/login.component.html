@@ -1,0 +1,64 @@
+<div class="content">
+</div>
+<div class="form" [ngStyle]="{'height':isLoginSelected?'400px':'550px'}">
+    <div class="row" style="height: 50px; padding: 0px 15px 0px 15px;">
+        <div class="col-xs-12 log-register-btn" [ngClass]="isLoginSelected ? 'col-md-8 selected' : 'col-md-4'"
+            (click)="isLoginSelected = true;">Login</div>
+        <div class="col-xs-12 log-register-btn" [ngClass]="isLoginSelected ? 'col-md-4' : 'col-md-8 selected'"
+            (click)="isLoginSelected = false;" style=" border-left: 1px solid #dfe3ee;">Register</div>
+    </div>
+    <div *ngIf="isLoginSelected else registerForm" class="row" style="padding:10px 20px 15px 110px; margin-top: 40px;">
+        <form>
+            <mat-form-field class="my-input">
+                <input matInput placeholder="Login">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="my-input">
+                <input type="password" matInput placeholder="Password">
+            </mat-form-field>
+            <br>
+            <a class="forgot-pass">I forgot my
+                password...</a>
+            <br>
+            <br>
+            <button class="form-control">Submit</button>
+            <br>
+            <button class="form-control" style="padding:0px">
+                <img src="assets/facebook_logo.png" style="width: 36px; float: left;">
+                <span> Facebook </span>
+            </button>
+        </form>
+    </div>
+    <ng-template #registerForm>
+        <div class="row" style="padding:10px 20px 15px 110px; margin-top:40px">
+            <form>
+                <mat-form-field class="my-input">
+                    <input type="email" matInput placeholder="EMail">
+                </mat-form-field>
+                <br>
+                <mat-form-field class="my-input">
+                    <input matInput placeholder="First Name">
+                </mat-form-field>
+                <br>
+                <mat-form-field class="my-input">
+                    <input matInput placeholder="Last Name">
+                </mat-form-field>
+                <br>
+                <mat-form-field class="my-input">
+                    <input type="password" matInput placeholder="Password">
+                </mat-form-field>
+                <br>
+                <mat-form-field class="my-input">
+                    <input type="password" matInput placeholder="Password again">
+                </mat-form-field>
+                <br>
+                <button class="form-control">Submit</button>
+                <br>
+                <button class="form-control" style="padding:0px">
+                    <img src="assets/facebook_logo.png" style="width: 36px; float: left;">
+                    <span> Facebook </span>
+                </button>
+            </form>
+        </div>
+    </ng-template>
+</div>

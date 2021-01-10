@@ -1,0 +1,73 @@
+.content {
+  background-image: url("/assets/Background/back_image0.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 765px;
+  width: 100%;
+  left: 20px;
+  top: 55px;
+}
+
+.form {
+  width: 375px;
+  //height: 500px;
+  margin: 10px;
+  box-shadow: 0 0 10px gray;
+  top: 170px;
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+}
+
+.log-register-btn {
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #dfe3ee;
+}
+.log-register-btn:hover {
+  background-color: #dfe3ee;
+}
+.selected {
+  background-color: #f1f1f1;
+  text-decoration: underline;
+}
+
+// ::ng-deep {
+//   .my-input {
+//     .mat-form-field-label {
+//       color: #36454f !important;
+//     }
+
+//     .mat-focused .mat-form-field-label {
+//       /*change color of label*/
+//       color: #36454f !important;
+//     }
+//     .mat-form-field-ripple {
+//       /*change color of underline when focused*/
+//       background-color: #36454f !important;
+//     }
+//   }
+// }
+
+.info-div {
+  height: 450px;
+  min-width: 400px;
+  width: 35%;
+  position: absolute;
+  right: 20px;
+  top: 400px;
+}
+
+.forgot-pass {
+  font-size: 14px;
+  float: right;
+  cursor: pointer;
+  color: mediumturquoise;
+}
+
+.forgot-pass:hover {
+    text-decoration: underline;
+    color: #36454f;
+}

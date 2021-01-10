@@ -1,0 +1,125 @@
+.menu-opened {
+  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
+  transition: width 0.45s;
+  width: 150px;
+}
+.menu-closed {
+  width: 50px;
+  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
+  transition: width 0.45s;
+}
+
+.title {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  font-family: "Verdana";
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+  padding: 10px 80px 10px 10px;
+}
+
+.title:hover {
+  color: #dfe3ee;
+}
+
+::ng-deep {
+  .mat-form-field-label {
+    color: #36454f !important;
+  }
+
+  .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: #36454f !important;
+  }
+  .mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #36454f !important;
+  }
+}
+
+.max-expanded {
+  height: 100%;
+  width: 100%;
+}
+
+.title-panel {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 55px;
+  background-color: #36454f;
+}
+
+// @media (max-width: 420px) {
+//   .title-panel {
+//     height: 90px;
+//   }
+//   .title {
+//     padding-top: 0px;
+//     margin-top: -20px;
+//   }
+//   .menu-and-content {
+//     height: calc(94%-90px);
+//   }
+//   .vertical-menu {
+//     margin-top: 90px !important;
+//   }
+//   .main-content {
+//     margin-top: 90px !important;
+//   }
+// }
+
+.menu-and-content {
+  height: calc(94%-55px);
+  width: 100%;
+}
+
+.vertical-menu {
+  z-index: 1000;
+  margin-top: 55px;
+  position: fixed;
+  background-color: #dfe3ee;
+  height: -webkit-fill-available;
+  float: left;
+  box-shadow: 0 0 4px gray;
+}
+
+.content {
+  height: -webkit-fill-available;
+  vertical-align: top;
+  float: right;
+  width: calc(100% - 50px);
+  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
+  transition: width 0.45s;
+}
+.min-content {
+  width: calc(100% - 150px);
+  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
+  transition: width 0.45s;
+}
+.main-content {
+  height: 90%;
+  min-width: 400px;
+  margin-top: 50px;
+}
+
+.register-btn {
+  float: left;
+  margin-top: 5px;
+  color: #dfe3ee;
+}
+
+#footer {
+  height: 170px;
+  padding: 10px 10px 10px 60px;
+  min-width: 400px;
+  background-color: #36454f;
+  z-index: 1;
+  color: #dfe3ee;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

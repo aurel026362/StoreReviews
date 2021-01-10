@@ -1,0 +1,28 @@
+<div>
+  <div class="menu-item" style="cursor: unset;">
+    <i *ngIf="!isOpenMenu" style="margin-top: 20px;" class="fas fa-search  icon-item-menu pointer" (click)="openMenu.emit();"></i>
+    <mat-form-field *ngIf="isOpenMenu" style="width:100%;">
+      <input matInput placeholder="Search">
+    </mat-form-field>
+  </div>
+  <div class="menu-item" routerLink="/">
+    <i class="fas fa-home icon-item-menu"></i>
+    <span *ngIf="isOpenMenu">Home</span>
+  </div>
+  <div class="menu-item" [matMenuTriggerFor]="beforeMenu">
+    <i class="fas fa-location-arrow icon-item-menu"></i>
+    <span *ngIf="isOpenMenu">Contacts</span>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item routerLink="./about">About</button>
+      <button mat-menu-item routerLink="./contacts">Contacts</button>
+    </mat-menu>
+  </div>
+  <div class="menu-item" [matMenuTriggerFor]="afterMenu">
+    <i class="far fa-bell icon-item-menu"></i>
+    <span *ngIf="isOpenMenu">After</span>
+    <mat-menu #afterMenu="matMenu" xPosition="after">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+  </div>
+</div>

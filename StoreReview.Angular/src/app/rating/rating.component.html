@@ -1,16 +1,37 @@
 <div>
-    <mat-accordion>
-        <mat-expansion-panel>
+    <mat-accordion *ngFor="let company of companies">
+        <mat-expansion-panel (opened)="loadShops(company.id)" [expanded]="company.id === selectedCompanyId">
             <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Top electronic store
+                <mat-panel-title style="width: 40%;">
+                    {{company.name}}
                 </mat-panel-title>
-                <mat-panel-description>
-                    fdsfsdfsd
+                <mat-panel-description style="width: 55%;">
+                    {{company.phone}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <div id="parent">
-                <canvas id="canvas" width="400" height="200"></canvas>
+            <p>
+                {{company.description}}
+              </p>
+            <div class="row shops">
+                <div *ngFor="let shop of shopsForSelectedCompany" class="col-md-4 col-xs-12 shop">
+                    <mat-card>
+                        <mat-card-header [routerLink]="['./store/'+shop.id]">
+                          <div mat-card-avatar class="example-header-image"></div>
+                          <mat-card-title>{{shop.address}}</mat-card-title>
+                          <mat-card-subtitle>{{shop.phone}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                        <mat-card-content>
+                          <p>
+                            {{shop.description}}
+                          </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button>LIKE</button>
+                          <button mat-button>SHARE</button>
+                        </mat-card-actions>
+                      </mat-card>
+                </div>
             </div>
         </mat-expansion-panel>
     </mat-accordion>

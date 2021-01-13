@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreReview.Core.Commands;
 using StoreReview.Core.DtoModels;
@@ -21,11 +22,11 @@ namespace StoreReview.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IList<ShopDto>> GetShops()
+        public async Task<ActionResult<IList<ShopDto>>> GetShops()
         {
             var query = new GetShopsQuery();
             var result = await _mediator.Send(query);
-            return result;
+            return Ok(result);
         }
 
         [HttpGet("{shopId:long}")]

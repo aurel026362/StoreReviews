@@ -100,7 +100,7 @@
   transition: width 0.45s;
 }
 .main-content {
-  height: 90%;
+  min-height: 100vh;
   min-width: 400px;
   margin-top: 50px;
 }
@@ -118,7 +118,6 @@
   background-color: #36454f;
   z-index: 1;
   color: #dfe3ee;
-  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;

@@ -1,8 +1,23 @@
 <div class="max-expanded">
   <div class="title-panel">
     <div style="float: left;padding: 15px 10px 10px 20px; color: white;">
-      <a class="register-btn" routerLink="/login"><i class="fas fa-sign-in-alt"></i><span
-          style="margin-left:5px">Register/Login</span></a>
+      <a *ngIf="!currentUserIsAuthenticated; else authenticatedUser" class="register-btn" routerLink="/login"><i
+          class="fas fa-sign-in-alt"></i><span style="margin-left:5px">Register/Login</span></a>
+      <ng-template #authenticatedUser>
+        <span [matMenuTriggerFor]="menu" style="cursor: pointer;">
+          <span>O, Hi Mark!</span>
+        </span>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>account_box</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </ng-template>
     </div>
     <a class="title" routerLink="/">{{title}}</a>
   </div>
@@ -17,11 +32,14 @@
       </div>
       <div id="footer">
         <div class="row" style="margin: 0px;">
-          <div class="col-md-6 col-xs-12" style="margin-bottom:15px;">
+          <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
+            <img src="https://placeit.net/assets/backgrounds/logo.png" alt="no photo" style="width: 100px;margin-top: 20px;">
+          </div>
+          <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
             Pastel Rainbow <br>
             Grey Lavender Colors
           </div>
-          <div class="col-md-6 col-xs-12">
+          <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
             Never Doub <br>
             Never Dreamed Of This
             Uonto sdilo dsort

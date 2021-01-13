@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { AuthGuard } from './guard/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -15,11 +16,13 @@ const routes: Routes = [
     children: [{
       path: '',
       loadChildren: () => import('./store/store.module').then(m => m.StoreModule)
-    }]
+    }],
+    canActivate: [AuthGuard]
   },
   {
     path: 'about',
-    component: AboutComponent
+    component: AboutComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'contacts',

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace StoreReview.Core.Domain
 {
-    public class Role : Entity
+    public class Role : IdentityRole<long>
     {
         public string Description { get; set; }
-        public User[] Users { get; set; }
     }
 }

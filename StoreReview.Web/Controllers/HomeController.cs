@@ -12,7 +12,7 @@ namespace StoreReview.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<string> Get()
+        public async Task<ActionResult<string>> Get()
         {
             return await Task.FromResult("Welcome!");
         }

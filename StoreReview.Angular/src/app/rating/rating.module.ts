@@ -4,13 +4,17 @@ import { SlideshowModule } from 'ng-simple-slideshow';
 import { MatButtonModule } from '@angular/material/button';
 import { RatingComponent } from './rating.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     SlideshowModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule,
+    RouterModule
   ],
   declarations: [
     RatingComponent

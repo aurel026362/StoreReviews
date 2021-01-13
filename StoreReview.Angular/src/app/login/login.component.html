@@ -8,14 +8,15 @@
             (click)="isLoginSelected = false;" style=" border-left: 1px solid #dfe3ee;">Register</div>
     </div>
     <div *ngIf="isLoginSelected else registerForm" class="row" style="padding:10px 20px 15px 110px; margin-top: 40px;">
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
             <mat-form-field class="my-input">
-                <input matInput placeholder="Login">
+                <input matInput formControlName="userName" placeholder="Login" required>
             </mat-form-field>
             <br>
             <mat-form-field class="my-input">
-                <input type="password" matInput placeholder="Password">
+                <input type="password" matInput formControlName="password" placeholder="Password" required>
             </mat-form-field>
+            <span *ngIf="errorMessage" style="color:red; display: block;">{{errorMessage}}</span>
             <br>
             <a class="forgot-pass">I forgot my
                 password...</a>
@@ -23,7 +24,7 @@
             <br>
             <button class="form-control">Submit</button>
             <br>
-            <button class="form-control" style="padding:0px">
+            <button class="form-control" style="padding:0px" (click)="checkIsLogedIn()">
                 <img src="assets/facebook_logo.png" style="width: 36px; float: left;">
                 <span> Facebook </span>
             </button>
@@ -31,25 +32,25 @@
     </div>
     <ng-template #registerForm>
         <div class="row" style="padding:10px 20px 15px 110px; margin-top:40px">
-            <form>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
                 <mat-form-field class="my-input">
-                    <input type="email" matInput placeholder="EMail">
+                    <input type="email" matInput formControlName="email" placeholder="EMail">
                 </mat-form-field>
                 <br>
                 <mat-form-field class="my-input">
-                    <input matInput placeholder="First Name">
+                    <input matInput formControlName="firsName" placeholder="First Name">
                 </mat-form-field>
                 <br>
                 <mat-form-field class="my-input">
-                    <input matInput placeholder="Last Name">
+                    <input matInput formControlName="lastName" laceholder="Last Name">
                 </mat-form-field>
                 <br>
                 <mat-form-field class="my-input">
-                    <input type="password" matInput placeholder="Password">
+                    <input type="password" matInput formControlName="Password" placeholder="Password">
                 </mat-form-field>
                 <br>
                 <mat-form-field class="my-input">
-                    <input type="password" matInput placeholder="Password again">
+                    <input type="password" matInput formControlName="Password" placeholder="Password again">
                 </mat-form-field>
                 <br>
                 <button class="form-control">Submit</button>

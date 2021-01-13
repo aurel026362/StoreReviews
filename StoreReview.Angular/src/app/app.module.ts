@@ -12,14 +12,24 @@ import { MatInputModule } from '@angular/material/input';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';
-import { LoginComponent } from './login/login.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { ImageDialogModule } from './shared/image-dialog/image-dialog.module';
 import { RatingModule } from './rating/rating.module';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { LoginModule } from './login/login.module';
+import { STORE_REVIEW_API_URL } from './app-injection-tokens';
+import { environment } from 'src/environments/environment';
+import { JwtModule } from "@auth0/angular-jwt";
+import { ACCESS_TOKEN_KEY, AuthService } from './services/auth.service';
+import { MatIconModule } from '@angular/material';
+
+export function tokenGetter() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
 @NgModule({
   imports: [
     NgxMaterialTimepickerModule,
@@ -34,7 +44,15 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatExpansionModule,
     MatButtonModule,
     ImageDialogModule,
-    RatingModule
+    RatingModule,
+    LoginModule,
+    MatIconModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        allowedDomains: environment.tokenAllowedDomains
+      }
+    })
   ],
   declarations: [
     AppComponent,
@@ -42,8 +60,13 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MenuComponent,
     AboutComponent,
     ContactsComponent,
-    LoginComponent,
     PageNotFoundComponent
+  ],
+  providers: [{
+    provide: STORE_REVIEW_API_URL,
+    useValue: environment.storeReviewApi
+  },
+  AuthService
   ],
   entryComponents: [
     MenuComponent

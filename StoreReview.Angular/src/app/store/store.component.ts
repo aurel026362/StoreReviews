@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ShopModel } from 'src/app/Models/store';
+import { Shop } from 'src/app/Models/store';
 import { StoreService } from './store.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../shared/image-dialog/image-dialog.component';
+import { ReviewModel } from '../models/review';
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
@@ -10,13 +11,14 @@ import { ImageDialogComponent } from '../shared/image-dialog/image-dialog.compon
 })
 export class StoreComponent implements OnInit {
 
-  currentStore: ShopModel;
+  currentStore: Shop;
+  reviews: ReviewModel[] = [];
 
   constructor(private storeService: StoreService,
     private dialog: MatDialog) { }
 
-  ngOnInit() {
-    this.currentStore = this.storeService.getStore(1);
+  async ngOnInit(): Promise<void> {
+    this.currentStore = await this.storeService.getStoreById(1).toPromise();
   }
 
   openImage(imageUrls, selectedImageUrl) {

@@ -13,10 +13,6 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get(`WeatherForecast`).subscribe(data => {
-      console.log('data ', data);
-    });
-
     this.imageUrlArray = [
       'assets/Dashboard/photo1.jpg',
       'assets/Dashboard/photo2.jpg',

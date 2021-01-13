@@ -9,7 +9,7 @@
                     Description
                 </mat-panel-title>
                 <mat-panel-description>
-                    {{currentStore.title}}
+                    {{currentStore.address}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -24,7 +24,7 @@
                     Rating: {{currentStore.rating}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <div *ngFor="let review of currentStore.reviews">
+            <div *ngFor="let review of reviews">
                 <div style="display: inline-block;">
                     <b>{{review.user.email}}:</b>
                     <span> {{review.description}}</span>

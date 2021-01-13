@@ -27,7 +27,7 @@ namespace StoreReview.Core.CommandHandlers
         {
             var shop = _repository.GetByIdOrThrowNotFound(request.Id);
 
-            shop.Adress = request.Adress;
+            shop.Address = request.Address;
             shop.Phone = request.Phone;
             shop.Description = request.Description;
             shop.CompanyId = request.CompanyId;

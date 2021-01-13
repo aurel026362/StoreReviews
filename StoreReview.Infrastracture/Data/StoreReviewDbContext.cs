@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StoreReview.Core.Domain;
 using System;
 using System.Collections.Generic;
@@ -6,15 +7,19 @@ using System.Text;
 
 namespace StoreReivew.Infrastracture.Data
 {
-    public class StoreReviewDbContext : DbContext
+    public class StoreReviewDbContext : IdentityDbContext<User, Role, long>
     {
-
         public StoreReviewDbContext()
         {
+
         }
         public StoreReviewDbContext(DbContextOptions<StoreReviewDbContext> options) : base(options)
         {
+
         }
+        //public StoreReviewDbContext(DbContextOptions<StoreReviewDbContext> options) : base(options)
+        //{
+        //}
 
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }

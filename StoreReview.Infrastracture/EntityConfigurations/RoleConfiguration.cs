@@ -15,6 +15,10 @@ namespace StoreReivew.Infrastracture.EntityConfigurations
             builder.ToTable("Roles");
             builder.HasKey(k => k.Id);
             builder.Property(p => p.Description).IsRequired().HasMaxLength(100);
+
+            //builder.HasMany<User>()
+            //    .WithOne()
+            //    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

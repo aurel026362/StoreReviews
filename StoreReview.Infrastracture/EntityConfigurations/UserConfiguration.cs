@@ -15,9 +15,6 @@ namespace StoreReivew.Infrastracture.EntityConfigurations
             builder.Property(p => p.LastName).IsRequired().HasMaxLength(100);
             builder.Property(p => p.DateOfBirth).IsRequired();
             builder.Property(p => p.Email).IsRequired().HasMaxLength(100);
-            //builder.Property(p => p.RoleId).IsRequired();
-            //builder.HasOne(key => key.Role).WithMany(p => p.Users)
-            //    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

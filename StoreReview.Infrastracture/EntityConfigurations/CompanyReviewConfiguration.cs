@@ -5,21 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreReivew.Infrastracture.EntityConfigurations
+namespace StoreReview.Infrastracture.EntityConfigurations
 {
-    class CompanyReviewConfiguration : IEntityTypeConfiguration<CompanyReview>
-    {
-
-        public void Configure(EntityTypeBuilder<CompanyReview> builder)
+    class CompanyReviewConfigurationusing: IEntityTypeConfiguration<CompanyReview>
         {
-            builder.ToTable("CompanyReviews");
-            builder.HasKey(k => k.Id);
-            builder.Property(p => p.Description).IsRequired().HasMaxLength(2000);
-            builder.Property(p => p.Date).IsRequired();
-            builder.Property(p => p.Ratting).IsRequired();
-            builder.HasOne(p => p.User).WithMany();
-            builder.HasMany(p => p.Replies);
-            builder.HasOne(p => p.Company).WithMany(x => x.Reviews);
+
+            public void Configure(EntityTypeBuilder<CompanyReview> builder)
+            {
+                builder.HasOne(k => k.Company).WithMany(x => x.Reviews)
+                .OnDelete(DeleteBehavior.NoAction);
+            }
         }
     }
-}

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Shop } from 'src/app/Models/store';
-import { StoreService } from './store.service';
+import { Shop } from 'src/app/models/shop.model';
+import { StoreService } from '../services/store.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../shared/image-dialog/image-dialog.component';
-import { ReviewModel } from '../models/review';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReviewType } from '../models/review-type.enum';
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
@@ -11,14 +12,26 @@ import { ReviewModel } from '../models/review';
 })
 export class StoreComponent implements OnInit {
 
+  readonly reviewTypeShop = ReviewType.Shop;
+  currentStoreId: number;
   currentStore: Shop;
-  reviews: ReviewModel[] = [];
+  isStore = true;
 
-  constructor(private storeService: StoreService,
-    private dialog: MatDialog) { }
+  constructor(
+    private readonly storeService: StoreService,
+    private readonly router: Router,
+    private dialog: MatDialog,
+    private route: ActivatedRoute) { 
+      console.log('current route ',this.router.url);
+      if (this.router.url.includes('company')){
+        this.isStore = false
+      }
+      const id = this.route.snapshot.paramMap.get('id');
+    }
 
   async ngOnInit(): Promise<void> {
-    this.currentStore = await this.storeService.getStoreById(1).toPromise();
+      this.currentStoreId = +this.route.snapshot.paramMap.get('id');
+      this.currentStore = await this.storeService.getStoreById(this.currentStoreId).toPromise();
   }
 
   openImage(imageUrls, selectedImageUrl) {

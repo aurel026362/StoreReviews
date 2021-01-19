@@ -6,6 +6,8 @@ namespace StoreReview.Core.Interfaces
 {
     public interface ICurrentUser
     {
-        string UserName { get; set; }
+        string Email { get; }
+        long? Id { get; }
+        string Role { get; }
     }
 }

@@ -14,6 +14,9 @@ namespace StoreReivew.Infrastracture.EntityConfigurations
             builder.Property(p => p.Name).IsRequired().HasMaxLength(200);
             builder.Property(p => p.Description).HasMaxLength(3000);
             builder.Property(p => p.Phone).HasMaxLength(20);
+
+            builder.HasMany(k => k.Reviews).WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

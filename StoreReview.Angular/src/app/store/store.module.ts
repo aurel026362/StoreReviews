@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreComponent } from './store.component';
-import { StoreService } from './store.service';
+import { StoreService } from '../services/store.service';
 import { MatInputModule } from '@angular/material/input';
-import { SlideshowModule } from 'ng-simple-slideshow';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { Routes, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { ReviewsModule } from '../shared/reviews/reviews.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 const routes: Routes = [
   {
     path: '',
@@ -17,10 +19,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     MatInputModule,
-    SlideshowModule,
     MatExpansionModule,
+    ReviewsModule,
     CommonModule,
     MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

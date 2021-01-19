@@ -1,0 +1,54 @@
+<form #ngForm [formGroup]="commentFormGroup" (ngSubmit)="addComment()">
+    <div class="row">
+        <div class="col-md-10 col-xs-12">
+            <mat-form-field>
+                <textarea matInput placeholder="Leave a comment" rows="4" formControlName="description"
+                    required></textarea>
+                <mat-error *ngIf="commentFormGroup.get('description').invalid">Comment must have at least one character
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <mat-form-field>
+                <input type="number" step="0.1" matInput placeholder="Ratting" min="0" max="10" [maxLength]="4"
+                    formControlName="ratting">
+                <mat-error *ngIf="commentFormGroup.get('ratting').invalid">Value must be betweeen 0 and 10.</mat-error>
+            </mat-form-field>
+            <button mat-raised-button style="width: 100%;" type="submit"
+                [disabled]="commentFormGroup.invalid || !currentUserIsAuthenticated">Send</button>
+        </div>
+        <div *ngIf="!currentUserIsAuthenticated" class="col-12 auth-warning">
+            <span>You must be authenticated for adding comments!</span>
+        </div>
+    </div>
+</form>
+<mat-divider class="divider"></mat-divider>
+<div class="row" *ngFor="let review of reviews" style="margin-bottom: 10px; font-size: 14px;">
+    <div class="col-md-2 col-xs-12 margin-top-10">
+        <span>{{review.ownerFullName}}</span>
+    </div>
+    <div class="col-md-10 col-xs-12" style="border-radius: 5px;
+    background-color: #dfe3ee;">
+        <div>
+            <p class="comment-description margin-top-10">{{review.description}}</p>
+            <span class="comment-ratting margin-top-10">{{review.ratting}}</span>
+        </div>
+        <div style="text-align: right;">
+            <div class="comment-date">15.01.2020 15:45</div>
+            <div class="comment-reply-text">Reply</div>
+            <div class="comment-likes">
+                <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                    <mat-icon>thumb_up</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                    <mat-icon>thumb_down</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- <div style="padding-left: 200px; width: 100%;">
+        <app-reviews *ngIf="isReply" [reviewType]="reviewType"
+                    [entityId]="entityId" [isReply]="false">
+                </app-reviews>
+    </div> -->
+</div>

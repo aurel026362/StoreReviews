@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StoreReview.Core.Domain;
+using StoreReview.Web.Services;
 using StoreReview.Web.ViewModels;
 
 namespace StoreReview.Web.Controllers
@@ -20,18 +18,18 @@ namespace StoreReview.Web.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        //private readonly SignInManager<User> _signInManager;
         private readonly IOptions<AuthOptions> _authOptions;
+        private readonly IFacebookAuthService _facebookAuthService;
 
-        public AccountController(UserManager<User> userManager, IOptions<AuthOptions> authOptions)
+        public AccountController(UserManager<User> userManager, IOptions<AuthOptions> authOptions, IFacebookAuthService facebookAuthService)
         {
             _userManager = userManager;
-            //_signInManager = signInManager;
             _authOptions = authOptions;
+            _facebookAuthService = facebookAuthService;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel input)
+        public async Task<ActionResult<AuthenticationResultViewModel>> Register([FromBody] RegisterViewModel input, [FromQuery] bool isExternalAuth = false)
         {
             var message = "User already registered!";
             try
@@ -45,40 +43,109 @@ namespace StoreReview.Web.Controllers
                         UserName = input.UserName,
                         Email = input.Email,
                         FirstName = input.FirstName,
-                        LastName = input.LastName,
-                        SecurityStamp = "test"
+                        LastName = input.LastName
                     };
-                    
+                    IdentityResult result;
+                    if (!isExternalAuth)
+                    {
+                        result = await _userManager.CreateAsync(user, input.Password);
+                    }
+                    else
+                    {
 
-                    IdentityResult result = await _userManager.CreateAsync(user, input.Password);
+                        result = await _userManager.CreateAsync(user);
+                    }
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Concat(result.Errors));
+                    }
                     await _userManager.AddToRolesAsync(user, input.Roles);
-                    return Ok(result);
+                    var accessToken = await GenerateJWT(user);
+                    return Ok(new AuthenticationResultViewModel
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        UserId = user.Id,
+                        UserName = user.UserName,
+                        AccessToken = accessToken
+                    });
                 }
                 else
                 {
                     return BadRequest(message);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel input)
+        public async Task<ActionResult<AuthenticationResultViewModel>> Login([FromBody] LoginViewModel input)
         {
             var user = await _userManager.FindByNameAsync(input.UserName);
-            if (user!= null && await _userManager.CheckPasswordAsync(user, input.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, input.Password))
             {
                 var token = await GenerateJWT(user);
-                return Ok(new { access_token = token });
+                return Ok(new AuthenticationResultViewModel
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    AccessToken = token
+                });
             }
-            return Ok();
+            return NotFound();
+        }
+
+        [HttpPost("login-with-facebook")]
+        public async Task<ActionResult<AuthenticationResultViewModel>> LoginWithFacebook([FromBody] LoginWithFacebookViewModel input)
+        {
+            var validatedToken = await _facebookAuthService.ValidateAccessTokenAsync(input.AccessToken);
+            if (!validatedToken.Data.IsValid)
+            {
+                return BadRequest("Couldn't obtain facebook data!");
+            }
+            var userInfo = await _facebookAuthService.GetUserInfoAsync(input.AccessToken);
+            var userName = string.Concat(userInfo.FirstName, userInfo.LastName, userInfo.Id);
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                return await Register(new RegisterViewModel()
+                {
+                    FirstName = userInfo.FirstName,
+                    LastName = userInfo.LastName,
+                    Email = string.Concat(userName, "@mail.com"),
+                    UserName = userName,
+                    Roles = new List<string>
+                    {
+                        "User"
+                    }
+                }, true);
+            }
+            var accessToken = await GenerateJWT(user);
+            return Ok(new AuthenticationResultViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                UserId = user.Id,
+                UserName = user.UserName,
+                AccessToken = accessToken
+            });
         }
 
         private async Task<string> GenerateJWT(User user)
         {
+            if (user == null)
+            {
+                throw new Exception("User object is null. Cannot generate the token.");
+            }
             var authParams = _authOptions.Value;
 
             var securityKey = authParams.GetSymetricSecurityKey();
@@ -104,20 +171,6 @@ namespace StoreReview.Web.Controllers
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        [Authorize]
-        [HttpGet("get-profile")]
-        public async Task<IActionResult> GetUserProfile()
-        {
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userId);
-            return Ok(new
-            {
-                user.FullName,
-                user.Email,
-                user.UserName
-            });
         }
     }
 }

@@ -4,16 +4,20 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StoreReivew.Infrastracture.Data;
+using StoreReivew.Web.Services;
 using StoreReview.Core.AutoMapperProfiles;
 using StoreReview.Core.Domain;
 using StoreReview.Core.Interfaces;
 using StoreReview.Core.Queries;
+using StoreReview.Web.External.Contracts;
+using StoreReview.Web.Services;
 
 namespace StoreReview.Web
 {
@@ -34,6 +38,10 @@ namespace StoreReview.Web
             var authOptionsConfiguration = Configuration.GetSection("Auth");
             services.Configure<AuthOptions>(authOptionsConfiguration);
 
+            var facebookAuthSettings = new FacebookAuthSettings();
+            Configuration.Bind(nameof(FacebookAuthSettings), facebookAuthSettings);
+            services.AddSingleton(facebookAuthSettings);
+
             var authOptions = authOptionsConfiguration.Get<AuthOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -52,7 +60,15 @@ namespace StoreReview.Web
                         IssuerSigningKey = authOptions.GetSymetricSecurityKey(), //HS256
                         ValidateIssuerSigningKey = true
                     };
+                }).AddFacebook(options =>
+                {
+                    options.AppId = facebookAuthSettings.AppId;
+                    options.AppSecret = facebookAuthSettings.AppSecret;
                 });
+
+            services.AddHttpClient();
+            services.AddSingleton<IFacebookAuthService, FacebookAuthService>();
+            //services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddIdentityCore<User>(options =>
             {
@@ -62,12 +78,9 @@ namespace StoreReview.Web
 
 
             services.AddDbContext<StoreReviewDbContext>(
-                options => options.UseSqlServer(@"Data Source=DESKTOP-999TVV1\SQLEXPRESSBLOODY;Initial Catalog=StoreReview;Integrated Security=True"));
-            //options => options.UseSqlServer(Configuration.GetConnectionString("AppData")));
+                options => options.UseSqlServer(Configuration.GetConnectionString("AppData")));
 
-            services.AddHttpContextAccessor();
-
-            services.AddCors(options => 
+            services.AddCors(options =>
                 options.AddDefaultPolicy(builder =>
                 {
                     builder.AllowAnyOrigin()
@@ -75,8 +88,9 @@ namespace StoreReview.Web
                         .AllowAnyHeader();
                 })
             );
-            //services.AddScoped(typeof(ICurrentUser), typeof(HttpContextCurrentUser));
+            services.AddScoped(typeof(ICurrentUser), typeof(HttpContextCurrentUser));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
             services.AddMediatR(typeof(GetShopsQuery).Assembly);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
@@ -86,13 +100,13 @@ namespace StoreReview.Web
                 mc.AddProfile(new MappingProfile());
             });
 
+
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StoreReview API", Version = "v1" });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

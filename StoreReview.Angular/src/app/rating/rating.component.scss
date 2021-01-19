@@ -1,0 +1,34 @@
+.view_toggles{
+    margin:10px 10px 10px 0px;
+}
+
+.view-table{
+    width: 100%;
+    .actions{
+        width: 10%;
+        min-width: 160px;
+    }
+    .description{
+        width: 50%;
+        padding: 5px;
+    }
+    .view-item{
+        cursor: pointer;
+    }
+    .view-item:hover{
+        background-color: #dfe3ee;
+    }
+}
+
+:host ::ng-deep{
+    .ratting-container{
+        .companySearch{
+            width: 20%;
+        }
+    }
+}
+.loading-spinner{
+    height: 100vh;
+    text-align: -webkit-center;
+    padding-top: 20vh;
+}

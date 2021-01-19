@@ -9,7 +9,6 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { SlideshowModule } from 'ng-simple-slideshow';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -24,7 +23,7 @@ import { STORE_REVIEW_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from "@auth0/angular-jwt";
 import { ACCESS_TOKEN_KEY, AuthService } from './services/auth.service';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -39,7 +38,6 @@ export function tokenGetter() {
     MatMenuModule,
     MatDialogModule,
     MatInputModule,
-    SlideshowModule,
     HttpClientModule,
     MatExpansionModule,
     MatButtonModule,
@@ -66,7 +64,7 @@ export function tokenGetter() {
     provide: STORE_REVIEW_API_URL,
     useValue: environment.storeReviewApi
   },
-  AuthService
+    AuthService
   ],
   entryComponents: [
     MenuComponent

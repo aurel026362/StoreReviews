@@ -11,5 +11,6 @@ namespace StoreReview.Core.Domain
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string FullName => FirstName + " " + LastName;
+        public string PictureUrl { get; set; }
     }
 }

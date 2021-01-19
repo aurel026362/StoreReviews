@@ -2,10 +2,11 @@
   <div class="title-panel">
     <div style="float: left;padding: 15px 10px 10px 20px; color: white;">
       <a *ngIf="!currentUserIsAuthenticated; else authenticatedUser" class="register-btn" routerLink="/login"><i
-          class="fas fa-sign-in-alt"></i><span style="margin-left:5px">Register/Login</span></a>
+          class="fas fa-sign-in-alt"></i><span style="margin-left:5px">Login Page</span></a>
       <ng-template #authenticatedUser>
         <span [matMenuTriggerFor]="menu" style="cursor: pointer;">
-          <span>O, Hi Mark!</span>
+          <!-- <span>O, Hi Mark!</span> -->
+          <span>O, Hi {{currentUser?.firstName + " " + currentUser?.lastName}}</span>
         </span>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>

@@ -1,17 +1,18 @@
-.load-items-text {
-  margin: 5px 10px 5px 0px;
-  font-size: 14px;
-  color: #4682B4;
+.company-details {
+  padding: 30px 30px 20px 20px;
 }
-
-.load-items-text:hover{
-    text-decoration: underline;
+.display-inline {
+  display: inline-block;
 }
-
-.comment-form{
-  margin: 10px 0px 10px 0px;
+.description {
+  padding: 30px;
 }
-
-.icon-like{
-  margin-right: 5px;
+.padding-10 {
+  padding: 10px;
+}
+.company-crumb {
+  cursor: pointer;
+}
+.company-crumb :hover {
+  color: #dfe3ee;
 }

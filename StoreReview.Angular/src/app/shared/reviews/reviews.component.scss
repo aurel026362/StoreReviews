@@ -1,0 +1,41 @@
+.comment-description {
+  margin: 0px;
+  width: calc(100% - 50px);
+  display: inline-block;
+}
+.comment-ratting {
+  float: right;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0px 5px 0px 5px;
+  display: inline-block;
+}
+
+.comment-date {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.54);
+}
+.comment-reply-text {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.54);
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+.comment-reply-text:hover {
+  text-decoration: underline;
+}
+.comment-likes {
+  display: inline-block;
+}
+.divider {
+  margin: 20px 0px 20px 0px;
+}
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.auth-warning {
+  color: red;
+  text-align: end;
+}

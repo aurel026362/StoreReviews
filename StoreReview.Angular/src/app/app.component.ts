@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { UserModel } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -10,20 +10,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title = 'appTest';
+  public title = 'myApp';
   isOpenMenu = false;
+
+  get currentUser(): UserModel {
+    return this.authService.currentUser;
+  }
 
   get currentUserIsAuthenticated(): boolean {
     return this.authService.isAuthemticated;
   }
 
   constructor(public dialog: MatDialog,
-    private readonly httpService: HttpClient,
-    private authService: AuthService,
+    private readonly authService: AuthService,
     private readonly router: Router) {
-    this.httpService.get('https://localhost:5001/api/home').subscribe(data => {
-      console.log('data ', data);
-    });
   }
 
   logout(): void {

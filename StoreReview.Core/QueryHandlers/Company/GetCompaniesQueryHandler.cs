@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using StoreReview.Core.Domain;
 using StoreReview.Core.DtoModels;
 using StoreReview.Core.Interfaces;
@@ -25,7 +26,7 @@ namespace StoreReview.Core.QueryHandlers
         }
         public Task<IList<CompanyDto>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
         {
-            var companies = _repository.Read().ToList();
+            var companies = _repository.Read().Include(x=>x.Reviews).ToList();
             var companiesDto = _mapper.Map<IList<CompanyDto>>(companies);
             return Task.FromResult(companiesDto);
         }

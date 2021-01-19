@@ -3,15 +3,14 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 765px;
+  height: 100vh;
   width: 100%;
   left: 20px;
   top: 55px;
 }
 
 .form {
-  width: 375px;
-  //height: 500px;
+  min-width: 375px;
   margin: 10px;
   box-shadow: 0 0 10px gray;
   top: 170px;
@@ -34,23 +33,6 @@
   text-decoration: underline;
 }
 
-// ::ng-deep {
-//   .my-input {
-//     .mat-form-field-label {
-//       color: #36454f !important;
-//     }
-
-//     .mat-focused .mat-form-field-label {
-//       /*change color of label*/
-//       color: #36454f !important;
-//     }
-//     .mat-form-field-ripple {
-//       /*change color of underline when focused*/
-//       background-color: #36454f !important;
-//     }
-//   }
-// }
-
 .info-div {
   height: 450px;
   min-width: 400px;
@@ -64,7 +46,8 @@
   font-size: 14px;
   float: right;
   cursor: pointer;
-  color: mediumturquoise;
+  color: gray;
+  margin-bottom: 10px;
 }
 
 .forgot-pass:hover {

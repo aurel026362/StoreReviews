@@ -12,6 +12,7 @@ namespace StoreReview.Core.DtoModels
         public float Ratting { get; set; }
         public string Phone { get; set; }
         public long CompanyId { get; set; }
+        public string CompanyName { get; set; }
         public IEnumerable<string> PhotoUrls { get; set; }
     }
 }

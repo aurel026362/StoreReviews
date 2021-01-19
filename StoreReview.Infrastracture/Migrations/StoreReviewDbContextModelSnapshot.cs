@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreReivew.Infrastracture.Data;
 
-namespace StoreReivew.Infrastracture.Migrations
+namespace StoreReview.Infrastracture.Migrations
 {
     [DbContext(typeof(StoreReviewDbContext))]
     partial class StoreReviewDbContextModelSnapshot : ModelSnapshot
@@ -130,10 +130,16 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LogoUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebSite")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -161,18 +167,12 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.ToTable("CompanyPhotos");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReview", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.Review", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
-
-                    b.Property<long>("CompanyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CompanyReviewId")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -180,31 +180,38 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Ratting")
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("Ratting")
                         .HasColumnType("real");
+
+                    b.Property<long?>("ReviewId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CompanyReviewId");
+                    b.HasIndex("ReviewId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CompanyReview");
+                    b.ToTable("Reviews");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Review");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReviewPhoto", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.ReviewPhoto", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<long>("CompanyReviewId")
+                    b.Property<long>("ReviewId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Url")
@@ -212,9 +219,9 @@ namespace StoreReivew.Infrastracture.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyReviewId");
+                    b.HasIndex("ReviewId");
 
-                    b.ToTable("CompanyReviewPhotos");
+                    b.ToTable("ReviewPhotos");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.Role", b =>
@@ -295,62 +302,6 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.ToTable("ShopPhotos");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.ShopReview", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Ratting")
-                        .HasColumnType("real");
-
-                    b.Property<long>("ShopId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ShopReviewId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShopId");
-
-                    b.HasIndex("ShopReviewId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ShopReview");
-                });
-
-            modelBuilder.Entity("StoreReview.Core.Domain.ShopReviewPhoto", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<long>("ShopReviewId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShopReviewId");
-
-                    b.ToTable("ShopReviewPhotos");
-                });
-
             modelBuilder.Entity("StoreReview.Core.Domain.User", b =>
                 {
                     b.Property<long>("Id")
@@ -404,6 +355,9 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -425,6 +379,30 @@ namespace StoreReivew.Infrastracture.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReview", b =>
+                {
+                    b.HasBaseType("StoreReview.Core.Domain.Review");
+
+                    b.Property<long?>("CompanyId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasDiscriminator().HasValue("CompanyReview");
+                });
+
+            modelBuilder.Entity("StoreReview.Core.Domain.ShopReview", b =>
+                {
+                    b.HasBaseType("StoreReview.Core.Domain.Review");
+
+                    b.Property<long?>("ShopId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("ShopId");
+
+                    b.HasDiscriminator().HasValue("ShopReview");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -489,17 +467,11 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReview", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.Review", b =>
                 {
-                    b.HasOne("StoreReview.Core.Domain.Company", "Company")
-                        .WithMany("Reviews")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StoreReview.Core.Domain.CompanyReview", null)
+                    b.HasOne("StoreReview.Core.Domain.Review", null)
                         .WithMany("Replies")
-                        .HasForeignKey("CompanyReviewId");
+                        .HasForeignKey("ReviewId");
 
                     b.HasOne("StoreReview.Core.Domain.User", "User")
                         .WithMany()
@@ -507,20 +479,18 @@ namespace StoreReivew.Infrastracture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company");
-
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReviewPhoto", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.ReviewPhoto", b =>
                 {
-                    b.HasOne("StoreReview.Core.Domain.CompanyReview", "CompanyReview")
+                    b.HasOne("StoreReview.Core.Domain.Review", "Review")
                         .WithMany("Photos")
-                        .HasForeignKey("CompanyReviewId")
+                        .HasForeignKey("ReviewId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CompanyReview");
+                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.Shop", b =>
@@ -545,38 +515,22 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Navigation("Shop");
                 });
 
+            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReview", b =>
+                {
+                    b.HasOne("StoreReview.Core.Domain.Company", "Company")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("StoreReview.Core.Domain.ShopReview", b =>
                 {
                     b.HasOne("StoreReview.Core.Domain.Shop", "Shop")
                         .WithMany("Reviews")
-                        .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StoreReview.Core.Domain.ShopReview", null)
-                        .WithMany("Replies")
-                        .HasForeignKey("ShopReviewId");
-
-                    b.HasOne("StoreReview.Core.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShopId");
 
                     b.Navigation("Shop");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("StoreReview.Core.Domain.ShopReviewPhoto", b =>
-                {
-                    b.HasOne("StoreReview.Core.Domain.ShopReview", "ShopReview")
-                        .WithMany("Photos")
-                        .HasForeignKey("ShopReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ShopReview");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.Company", b =>
@@ -588,7 +542,7 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Navigation("Shops");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyReview", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.Review", b =>
                 {
                     b.Navigation("Photos");
 
@@ -600,13 +554,6 @@ namespace StoreReivew.Infrastracture.Migrations
                     b.Navigation("Photos");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("StoreReview.Core.Domain.ShopReview", b =>
-                {
-                    b.Navigation("Photos");
-
-                    b.Navigation("Replies");
                 });
 #pragma warning restore 612, 618
         }

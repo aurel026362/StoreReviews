@@ -1,64 +1,118 @@
 <div class="content">
 </div>
-<div class="form" [ngStyle]="{'height':isLoginSelected?'400px':'550px'}">
+<div class="form">
     <div class="row" style="height: 50px; padding: 0px 15px 0px 15px;">
         <div class="col-xs-12 log-register-btn" [ngClass]="isLoginSelected ? 'col-md-8 selected' : 'col-md-4'"
             (click)="isLoginSelected = true;">Login</div>
         <div class="col-xs-12 log-register-btn" [ngClass]="isLoginSelected ? 'col-md-4' : 'col-md-8 selected'"
             (click)="isLoginSelected = false;" style=" border-left: 1px solid #dfe3ee;">Register</div>
     </div>
-    <div *ngIf="isLoginSelected else registerForm" class="row" style="padding:10px 20px 15px 110px; margin-top: 40px;">
+    <div *ngIf="isLoginSelected else registerForm" class="col-12"
+        style="padding:10px 20px 15px 50px; margin-top: 40px;">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
-            <mat-form-field class="my-input">
-                <input matInput formControlName="userName" placeholder="Login" required>
-            </mat-form-field>
-            <br>
-            <mat-form-field class="my-input">
-                <input type="password" matInput formControlName="password" placeholder="Password" required>
-            </mat-form-field>
-            <span *ngIf="errorMessage" style="color:red; display: block;">{{errorMessage}}</span>
-            <br>
-            <a class="forgot-pass">I forgot my
-                password...</a>
-            <br>
-            <br>
-            <button class="form-control">Submit</button>
-            <br>
-            <button class="form-control" style="padding:0px" (click)="checkIsLogedIn()">
-                <img src="assets/facebook_logo.png" style="width: 36px; float: left;">
-                <span> Facebook </span>
-            </button>
+            <p>
+                <mat-form-field>
+                    <input matInput formControlName="userName" placeholder="Login" required>
+                    <mat-error *ngIf="registerFormGroup.get('userName').hasError('required')">This field is
+                        required.</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <input type="password" matInput formControlName="password" placeholder="Password" required>
+                    <mat-error *ngIf="registerFormGroup.get('password').hasError('required')">This field is
+                        required.</mat-error>
+                </mat-form-field>
+            </p>
+            <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+            <p>
+                <button mat-raised-button class="form-control" type="submit">Submit</button>
+            </p>
+            <p>
+                <button mat-stroked-button class="form-control" type="button" (click)="loginThroughFacebook()">
+                    <mat-icon style="color:#15a4fb;">facebook</mat-icon>
+                    <span> Facebook </span>
+                </button>
+            </p>
+            <button mat-button class="forgot-pass" type="button">I forgot my password...</button>
         </form>
     </div>
     <ng-template #registerForm>
-        <div class="row" style="padding:10px 20px 15px 110px; margin-top:40px">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
-                <mat-form-field class="my-input">
-                    <input type="email" matInput formControlName="email" placeholder="EMail">
-                </mat-form-field>
-                <br>
-                <mat-form-field class="my-input">
-                    <input matInput formControlName="firsName" placeholder="First Name">
-                </mat-form-field>
-                <br>
-                <mat-form-field class="my-input">
-                    <input matInput formControlName="lastName" laceholder="Last Name">
-                </mat-form-field>
-                <br>
-                <mat-form-field class="my-input">
-                    <input type="password" matInput formControlName="Password" placeholder="Password">
-                </mat-form-field>
-                <br>
-                <mat-form-field class="my-input">
-                    <input type="password" matInput formControlName="Password" placeholder="Password again">
-                </mat-form-field>
-                <br>
-                <button class="form-control">Submit</button>
-                <br>
-                <button class="form-control" style="padding:0px">
-                    <img src="assets/facebook_logo.png" style="width: 36px; float: left;">
-                    <span> Facebook </span>
-                </button>
+        <div class="col-12" style="padding:10px 20px 15px 50px; margin-top:40px">
+            <form [formGroup]="registerFormGroup" (ngSubmit)="onSubmitRegisterForm()">
+                <div style="display:inline-block;">
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>User Name</mat-label>
+                            <input matInput placeholder="User Name" formControlName="userName" required>
+                            <mat-error *ngIf="registerFormGroup.get('userName').hasError('required')">This field is
+                                required.</mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>EMail</mat-label>
+                            <input matInput placeholder="EMail" formControlName="email" required>
+                            <mat-icon matSuffix>email</mat-icon>
+                            <mat-error *ngIf="registerFormGroup.get('email').hasError('required')">This field is
+                                required.</mat-error>
+                            <mat-error *ngIf="registerFormGroup.get('email').hasError('email')">Incorrect email.
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="First Name" formControlName="firstName" required>
+                            <mat-error *ngIf="registerFormGroup.get('firstName').hasError('required')">This field is
+                                required.</mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput placeholder="Last Name" formControlName="lastName" required>
+                            <mat-error *ngIf="registerFormGroup.get('lastName').hasError('required')">This field is
+                                required.</mat-error>
+                        </mat-form-field>
+                    </p>
+                </div>
+                <div style="padding-left:20px; display:inline-block;">
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" placeholder="Password" formControlName="password" required>
+                            <mat-error *ngIf="registerFormGroup.get('password').hasError('required')">This field is
+                                required.</mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Confirm Passwrod</mat-label>
+                            <input matInput type="password" placeholder="Confirm Passwrod"
+                                formControlName="confirmPassword" required>
+                            <mat-error *ngIf="registerFormGroup.get('confirmPassword').hasError('required')">This field
+                                is
+                                required.</mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput type="date" placeholder="Date of Birth" formControlName="dateOfBirth">
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput placeholder="Phone number" formControlName="phoneNumber">
+                        </mat-form-field>
+                    </p>
+                </div>
+                <p>
+                    <button mat-raised-button class="form-control" type="submit"
+                        [disabled]="registerFormGroup.invalid">Submit</button>
+                </p>
             </form>
         </div>
     </ng-template>

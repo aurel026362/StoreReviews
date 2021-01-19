@@ -29,6 +29,17 @@ namespace StoreReview.Web.Controllers
             return Ok(result);
         }
 
+        [HttpGet("by-companyId/{companyId:long}")]
+        public async Task<ActionResult<IList<ShopDto>>> GetShopsByCompanyId([FromRoute] long companyId)
+        {
+            var query = new GetShopsByCompanyIdQuery()
+            {
+                CompanyId = companyId
+            };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
         [HttpGet("{shopId:long}")]
         public async Task<ShopDto> GetShopById([FromRoute] long shopId)
         {

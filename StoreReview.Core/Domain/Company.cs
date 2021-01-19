@@ -9,8 +9,10 @@ namespace StoreReview.Core.Domain
         public string Name { get; set; }
         public string Description { get; set; }
         public string Phone { get; set; }
-        public Shop[] Shops { get; set; }
-        public CompanyReview[] Reviews { get; set; }
-        public CompanyPhoto[] Photos { get; set; }
+        public string LogoUrl { get; set; }
+        public string WebSite { get; set; }
+        public IEnumerable<Shop> Shops { get; set; }
+        public IEnumerable<CompanyReview> Reviews { get; set; }
+        public IEnumerable<CompanyPhoto> Photos { get; set; }
     }
 }

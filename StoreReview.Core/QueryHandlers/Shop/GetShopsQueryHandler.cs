@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using StoreReview.Core.Domain;
 using StoreReview.Core.DtoModels;
 using StoreReview.Core.Interfaces;
@@ -23,7 +24,8 @@ namespace StoreReview.Core.QueryHandlers
         }
         public async Task<IList<ShopDto>> Handle(GetShopsQuery request, CancellationToken cancellationToken)
         {
-            var shops = _repository.Read().ToList();
+            var shops = await _repository.Read()
+                .Include(x => x.Company).ToListAsync();
             var shopsDto = _mapper.Map<IList<ShopDto>>(shops);
             return shopsDto;
         }

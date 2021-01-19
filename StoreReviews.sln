@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreReview.Infrastracture"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreReview.Angular", "StoreReview.Angular\StoreReview.Angular.csproj", "{7D436338-0A2F-4703-B817-E086417FA893}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreReview.Web", "StoreReview.Web\StoreReview.Web.csproj", "{CCE23BF9-BBA1-46C4-BD0F-02B1B0878299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreReview.Web", "StoreReview.Web\StoreReview.Web.csproj", "{CCE23BF9-BBA1-46C4-BD0F-02B1B0878299}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,4 +6,7 @@ export class UserModel {
     accessToken: string;
     dateOfBirth: Date;
     email: string;
+    pictureUrl: string;
+    roles: string[];
+    phoneNumber: string;
 }

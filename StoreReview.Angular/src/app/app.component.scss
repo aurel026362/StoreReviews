@@ -1,14 +1,3 @@
-.menu-opened {
-  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
-  transition: width 0.45s;
-  width: 150px;
-}
-.menu-closed {
-  width: 50px;
-  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
-  transition: width 0.45s;
-}
-
 .title {
   text-decoration: none;
   color: white;
@@ -37,6 +26,9 @@
     /*change color of underline when focused*/
     background-color: #232837 !important;
   }
+  .mat-ink-bar {
+    background-color: #232837 !important;
+  }
 }
 
 .max-expanded {
@@ -46,52 +38,17 @@
 
 .title-panel {
   position: fixed;
-  z-index: 1000;
   width: 100%;
-  height: 55px;
+  height: 50px;
+  z-index: 99;
   background-color: #232837;
 }
-
-.menu-and-content {
-  height: calc(94%-55px);
-  width: 100%;
-}
-
-.vertical-menu {
-  z-index: 1000;
-  margin-top: 55px;
-  position: fixed;
-  background-color: #dfe3ee;
-  height: -webkit-fill-available;
-  float: left;
-  box-shadow: 0 0 4px gray;
-}
-
-.content {
-  height: -webkit-fill-available;
-  vertical-align: top;
-  float: right;
-  width: calc(100% - 50px);
-  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
-  transition: width 0.45s;
-}
-.min-content {
-  width: calc(100% - 150px);
-  -webkit-transition: width 0.45s; /* For Safari 3.1 to 6.0 */
-  transition: width 0.45s;
-}
 .main-content {
+  background-color: rgb(250 250 250);
   min-height: 100vh;
   min-width: 400px;
   margin-top: 50px;
 }
-
-.register-btn {
-  float: left;
-  margin-top: 5px;
-  color: #dfe3ee;
-}
-
 #footer {
   min-height: 10vh;
   padding: 10px 10px 10px 60px;
@@ -108,4 +65,30 @@
   .mat-form-field {
     width: 100%;
   }
+  .mat-raised-button {
+    background-color: #dfe3ee;
+  }
+
+  .mat-raised-button > span {
+    color: black;
+  }
+}
+
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .sidenav-menu {
+    width: 15vh;
+  }
+}
+.is-authenticated {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 5px 5px 14px 10px;
+  border-radius: 100%;
+  background-color: #54e346;
 }

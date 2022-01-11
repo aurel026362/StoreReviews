@@ -32,8 +32,7 @@ namespace StoreReivew.Infrastracture.Data
 
         public IQueryable<T> ReadSql(string query)
         {
-            return null;
-            //_dbContext.Set<T>().FromSql(query);
+            return _dbContext.Set<T>().FromSqlRaw(query);
         }
 
         public List<T> GetAll()

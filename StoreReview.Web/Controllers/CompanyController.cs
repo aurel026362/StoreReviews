@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StoreReview.Core.Commands;
 using StoreReview.Core.DtoModels;
 using StoreReview.Core.Queries;
 using System;
@@ -20,12 +21,8 @@ namespace StoreReview.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<CompanyDto>>> GetCompanies()
-        {
-            var query = new GetCompaniesQuery();
-            var result = await _mediator.Send(query);
-            return Ok(result);
-        }
+        public async Task<IEnumerable<CompanyDto>> GetCompanies()
+            => await _mediator.Send(new GetCompaniesQuery());
 
         [HttpGet("{companyId:long}")]
         public async Task<ActionResult<CompanyDto>> GetCompanyById([FromRoute] long companyId)
@@ -36,6 +33,31 @@ namespace StoreReview.Web.Controllers
             };
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<long> CreateCompany([FromBody] AddCompanyCommand command)
+        {
+            var entityId = await _mediator.Send(command);
+            return entityId;
+        }
+
+        [HttpPut("{companyId:long}")]
+        public async Task<ActionResult> UpdateCompany([FromRoute] long companyId, [FromBody] UpdateCompanyCommand command)
+        {
+            command.Id = companyId;
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete("{companyId:long}")]
+        public async Task<ActionResult> DeleteCompany([FromRoute] long companyId)
+        {
+            await _mediator.Send(new DeleteCompanyCommand
+            {
+                Id = companyId
+            });
+            return NoContent();
         }
     }
 }

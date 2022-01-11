@@ -1,14 +1,15 @@
 .comment-description {
   margin: 0px;
-  width: calc(100% - 50px);
+  width: calc(100% - 70px);
   display: inline-block;
 }
 .comment-ratting {
-  float: right;
   font-weight: bold;
   font-size: 16px;
+  width: 70px;
   padding: 0px 5px 0px 5px;
   display: inline-block;
+  text-align: end;
 }
 
 .comment-date {
@@ -24,6 +25,7 @@
 }
 .comment-reply-text:hover {
   text-decoration: underline;
+  color: #232837;
 }
 .comment-likes {
   display: inline-block;
@@ -38,4 +40,50 @@
 .auth-warning {
   color: red;
   text-align: end;
+}
+.load-more-comments-btn {
+  cursor: pointer;
+  color: #232837;
+  float: right;
+}
+.load-more-comments-btn:hover {
+  text-decoration: underline;
+}
+.reaction-icon {
+  color: gray;
+  font-size: 18px;
+  cursor: pointer;
+}
+.reaction-icon-like:hover {
+  color: #232837;
+}
+.reaction-icon-dislike:hover {
+  color: #232837;
+}
+.rate-icon {
+  font-size: 16px;
+}
+.view-replies-btn {
+  background-color: rgb(224 224 224);
+  border-radius: 10px;
+  padding: 5px 20px;
+  width: 120px;
+  cursor: pointer;
+  // float: right;
+}
+.view-replies-btn:hover {
+  background-color: #232837;
+  color: white;
+}
+
+.repplies-content{
+  width: 100%;
+  margin: 10px 10px 10px 100px;
+  float:right
+}
+.profile-picture {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  border-radius: 50px;
 }

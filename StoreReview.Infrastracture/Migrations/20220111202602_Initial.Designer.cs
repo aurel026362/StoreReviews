@@ -10,8 +10,8 @@ using StoreReivew.Infrastracture.Data;
 namespace StoreReview.Infrastracture.Migrations
 {
     [DbContext(typeof(StoreReviewDbContext))]
-    [Migration("20210119160147_Init")]
-    partial class Init
+    [Migration("20220111202602_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,6 +129,12 @@ namespace StoreReview.Infrastracture.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -141,6 +147,12 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("WebSite")
                         .HasColumnType("nvarchar(max)");
 
@@ -149,7 +161,7 @@ namespace StoreReview.Infrastracture.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyPhoto", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.CompanyFile", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,14 +171,79 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Property<long>("CompanyId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("FileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
 
+                    b.HasIndex("FileId");
+
                     b.ToTable("CompanyPhotos");
+                });
+
+            modelBuilder.Entity("StoreReview.Core.Domain.File", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long?>("CompanyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ReviewId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ShopId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ReviewId");
+
+                    b.HasIndex("ShopId");
+
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.Review", b =>
@@ -175,6 +252,12 @@ namespace StoreReview.Infrastracture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -192,6 +275,12 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Property<long?>("ReviewId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
@@ -204,26 +293,6 @@ namespace StoreReview.Infrastracture.Migrations
                     b.ToTable("Reviews");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Review");
-                });
-
-            modelBuilder.Entity("StoreReview.Core.Domain.ReviewPhoto", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<long>("ReviewId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("ReviewPhotos");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.Role", b =>
@@ -271,11 +340,23 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Property<long>("CompanyId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -284,20 +365,34 @@ namespace StoreReview.Infrastracture.Migrations
                     b.ToTable("Shops");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.ShopPhoto", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.ShopFile", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("FileId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("ShopId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FileId");
 
                     b.HasIndex("ShopId");
 
@@ -357,8 +452,8 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("PictureId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -379,6 +474,8 @@ namespace StoreReview.Infrastracture.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("PictureId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -458,15 +555,38 @@ namespace StoreReview.Infrastracture.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.CompanyPhoto", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.CompanyFile", b =>
                 {
                     b.HasOne("StoreReview.Core.Domain.Company", "Company")
-                        .WithMany("Photos")
+                        .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("StoreReview.Core.Domain.File", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Company");
+
+                    b.Navigation("File");
+                });
+
+            modelBuilder.Entity("StoreReview.Core.Domain.File", b =>
+                {
+                    b.HasOne("StoreReview.Core.Domain.Company", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("StoreReview.Core.Domain.Review", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("ReviewId");
+
+                    b.HasOne("StoreReview.Core.Domain.Shop", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("ShopId");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.Review", b =>
@@ -484,17 +604,6 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.ReviewPhoto", b =>
-                {
-                    b.HasOne("StoreReview.Core.Domain.Review", "Review")
-                        .WithMany("Photos")
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Review");
-                });
-
             modelBuilder.Entity("StoreReview.Core.Domain.Shop", b =>
                 {
                     b.HasOne("StoreReview.Core.Domain.Company", "Company")
@@ -506,15 +615,32 @@ namespace StoreReview.Infrastracture.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("StoreReview.Core.Domain.ShopPhoto", b =>
+            modelBuilder.Entity("StoreReview.Core.Domain.ShopFile", b =>
                 {
+                    b.HasOne("StoreReview.Core.Domain.File", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("StoreReview.Core.Domain.Shop", "Shop")
-                        .WithMany("Photos")
+                        .WithMany()
                         .HasForeignKey("ShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("File");
+
                     b.Navigation("Shop");
+                });
+
+            modelBuilder.Entity("StoreReview.Core.Domain.User", b =>
+                {
+                    b.HasOne("StoreReview.Core.Domain.File", "Picture")
+                        .WithMany()
+                        .HasForeignKey("PictureId");
+
+                    b.Navigation("Picture");
                 });
 
             modelBuilder.Entity("StoreReview.Core.Domain.CompanyReview", b =>

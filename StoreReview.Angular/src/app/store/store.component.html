@@ -1,13 +1,7 @@
-<div class="company-details">
+<div *ngIf="!isLoading; else isLoadingTemp" class="company-details">
     <div class="row">
         <div class="col-12">
-            <!-- <div class="display-inline">
-                <h2>{{currentStore.companyName}}</h2>
-            </div>
-            <div class="display-inline">
-                <h2>/ {{currentStore.address}}</h2>
-            </div> -->
-            <h2><span [routerLink]="['/company/'+currentStore.companyId]" class="company-crumb">{{currentStore.companyName}}</span> | {{currentStore.address}}</h2>
+            <h2 class="crumb"><span class="company-crumb" [routerLink]="['/company/'+currentStore.companyId]">{{currentStore.companyName}}</span> | {{currentStore.address}}</h2>
             <mat-divider></mat-divider>
             <div class="description">
                 <p>{{currentStore.description}}</p>
@@ -48,3 +42,7 @@
         </div>
     </div>
 </div>
+<ng-template #isLoadingTemp>
+    <mat-spinner>
+    </mat-spinner>
+</ng-template>

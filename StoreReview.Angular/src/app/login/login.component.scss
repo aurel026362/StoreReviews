@@ -1,45 +1,12 @@
-.content {
-  background-image: url("/assets/Background/back_image0.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  width: 100%;
-  left: 20px;
-  top: 55px;
+:host ::ng-deep {
+  .mat-dialog-content {
+    padding: 0px;
+  }
 }
 
-.form {
-  min-width: 375px;
-  margin: 10px;
-  box-shadow: 0 0 10px gray;
-  top: 170px;
-  position: absolute;
-  background-color: white;
-  z-index: 1;
-}
-
-.log-register-btn {
-  text-align: center;
-  cursor: pointer;
-  padding: 10px;
-  border-bottom: 1px solid #dfe3ee;
-}
-.log-register-btn:hover {
-  background-color: #dfe3ee;
-}
-.selected {
-  background-color: #f1f1f1;
-  text-decoration: underline;
-}
-
-.info-div {
-  height: 450px;
-  min-width: 400px;
-  width: 35%;
-  position: absolute;
-  right: 20px;
-  top: 400px;
+.login-content {
+  padding: 10px 20px 15px 50px;
+  margin-top: 40px;
 }
 
 .forgot-pass {
@@ -51,6 +18,6 @@
 }
 
 .forgot-pass:hover {
-    text-decoration: underline;
-    color: #36454f;
+  text-decoration: underline;
+  color: #36454f;
 }

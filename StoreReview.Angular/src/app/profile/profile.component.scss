@@ -1,0 +1,70 @@
+.container-profile {
+}
+
+.profile-data {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
+    position: absolute;
+    top: 17vh;
+    left: 13vh;
+    width: 400px;
+    min-height: 75vh;
+}
+.name-on-image {
+    float: right;
+    right: 30px;
+    position: absolute;
+    top: 30vh;
+    color: #fafafa;
+    .user-name {
+        font-weight: 500;
+        font-size: 30px;
+        padding-right: 20px;
+        padding-top: 5px;
+    }
+    .edit-btn {
+        border-color: #fafafa;
+        border-radius: 30px;
+        width: 150px;
+        bottom: 5px;
+    }
+}
+.profile-data-properties {
+    padding: 50px;
+    align-items: baseline;
+    .data-property-name {
+        font-weight: 500;
+        color: gray;
+        width: 40%;
+    }
+    .data-property-value {
+        width: 60%;
+        word-break: break-word;
+        text-align: right;
+    }
+}
+.profile-content {
+    min-height: 90vh;
+    margin: 0px;
+    padding: 100px;
+    margin-left: 500px;
+}
+@media only screen and (max-width: 850px) {
+    .profile-content {
+        margin-left: 0px;
+        margin-top: 500px;
+    }
+    .name-on-image{
+        top: 53px;
+    }
+    .profile-data{
+        left: 5%;
+    }
+}
+:host ::ng-deep {
+    .profile-data-properties {
+        .mat-list-item-content {
+            align-items: start;
+        }
+    }
+}

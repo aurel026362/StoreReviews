@@ -12,5 +12,6 @@ namespace StoreReview.Core.Queries
         public ReviewType ReviewType { get; set; }
         public long? CompanyId { get; set; }
         public long? ShopId { get; set; }
+        public long? ReviewId { get; set; }
     }
 }

@@ -1,16 +1,12 @@
-.item-menu {
-  padding: 5px;
-}
-.icon-item-menu {
+.profile-picture {
+  width: 30px;
+  height: 30px;
   margin-right: 5px;
+  border-radius: 50px;
 }
-
-.menu-item {
-  font-size: 17px;
-  padding: 7px 15px 7px 15px;
+.list-item {
   cursor: pointer;
 }
-
-.menu-item:hover {
-  background-color: #b0b2b5;
+.list-item:hover {
+  background-color: #dfe3ee;
 }

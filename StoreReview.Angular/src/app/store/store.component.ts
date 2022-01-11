@@ -16,6 +16,7 @@ export class StoreComponent implements OnInit {
   currentStoreId: number;
   currentStore: Shop;
   isStore = true;
+  isLoading = true;
 
   constructor(
     private readonly storeService: StoreService,
@@ -32,6 +33,7 @@ export class StoreComponent implements OnInit {
   async ngOnInit(): Promise<void> {
       this.currentStoreId = +this.route.snapshot.paramMap.get('id');
       this.currentStore = await this.storeService.getStoreById(this.currentStoreId).toPromise();
+      this.isLoading = false;
   }
 
   openImage(imageUrls, selectedImageUrl) {

@@ -14,14 +14,15 @@ export class ReviewService {
     constructor(private http: HttpClient,
         @Inject(STORE_REVIEW_API_URL) private apiUrl: string) { }
 
-    getReviews(page: number, pageSize: number, reviewType: ReviewType, entityId: number): Observable<PagedResultModel<Review>> {
+    getReviews(page: number, pageSize: number, reviewType: ReviewType, entityId: number, reviewId: number = undefined): Observable<PagedResultModel<Review>> {
         return this.http.post<PagedResultModel<Review>>(`${this.apiUrl}api/reviews/${reviewType}/get`, {
             inputPage: {
                 page: page,
                 pageSize: pageSize
             },
             shopId: reviewType == ReviewType.Shop ? entityId : null,
-            companyId: reviewType == ReviewType.Company ? entityId : null
+            companyId: reviewType == ReviewType.Company ? entityId : null,
+            reviewId: reviewId
         });
     }
 
@@ -30,7 +31,8 @@ export class ReviewService {
             description: review.description,
             ratting: review.ratting,
             shopId: reviewType == ReviewType.Shop ? entityId : null,
-            companyId: reviewType == ReviewType.Company ? entityId : null
+            companyId: reviewType == ReviewType.Company ? entityId : null,
+            reviewId: review.reviewId
         });
     }
 }

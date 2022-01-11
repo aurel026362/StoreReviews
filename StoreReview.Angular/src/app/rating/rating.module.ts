@@ -16,6 +16,7 @@ import { ConfirmationDialogModule } from '../shared/modals/confirmation-dialog/c
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LinkifyModule } from '../shared/pipe/linkify.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -34,7 +35,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LinkifyModule
   ],
   declarations: [
     RatingComponent

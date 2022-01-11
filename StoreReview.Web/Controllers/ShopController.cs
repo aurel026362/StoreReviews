@@ -61,6 +61,7 @@ namespace StoreReview.Web.Controllers
         [HttpPut("{shopId:long}")]
         public async Task<ActionResult> UpdateShop([FromRoute] long shopId, [FromBody] UpdateShopCommand command)
         {
+            command.Id = shopId;
             await _mediator.Send(command);
             return NoContent();
         }

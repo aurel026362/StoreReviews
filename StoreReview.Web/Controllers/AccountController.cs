@@ -44,6 +44,7 @@ namespace StoreReview.Web.Controllers
                         Email = input.Email,
                         FirstName = input.FirstName,
                         LastName = input.LastName
+                        //PictureUrl = input.PictureUrl
                     };
                     IdentityResult result;
                     if (!isExternalAuth)
@@ -68,7 +69,9 @@ namespace StoreReview.Web.Controllers
                         Email = user.Email,
                         UserId = user.Id,
                         UserName = user.UserName,
-                        AccessToken = accessToken
+                        //PictureUrl = user.PictureUrl,
+                        AccessToken = accessToken,
+                        Roles = await _userManager.GetRolesAsync(user)
                     });
                 }
                 else
@@ -96,7 +99,9 @@ namespace StoreReview.Web.Controllers
                     Email = user.Email,
                     UserId = user.Id,
                     UserName = user.UserName,
-                    AccessToken = token
+                    //PictureUrl = user.PictureUrl,
+                    AccessToken = token,
+                    Roles = await _userManager.GetRolesAsync(user)
                 });
             }
             return NotFound();
@@ -120,6 +125,7 @@ namespace StoreReview.Web.Controllers
                 {
                     FirstName = userInfo.FirstName,
                     LastName = userInfo.LastName,
+                    PictureUrl = userInfo.Picture.Data.Url.ToString(),
                     Email = string.Concat(userName, "@mail.com"),
                     UserName = userName,
                     Roles = new List<string>
@@ -136,7 +142,9 @@ namespace StoreReview.Web.Controllers
                 Email = user.Email,
                 UserId = user.Id,
                 UserName = user.UserName,
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                //PictureUrl = user.PictureUrl,
+                Roles = await _userManager.GetRolesAsync(user)
             });
         }
 

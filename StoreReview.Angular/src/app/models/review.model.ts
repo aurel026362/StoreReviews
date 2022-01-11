@@ -1,21 +1,15 @@
+import { UserModel } from "./user.model";
+
 export class Review {
     id: number;
     description: string;
-    date: number;
+    date: Date;
     ratting: number;
     photoUrls: string[];
     hasReplies: boolean;
-    ownerFullName: string;
+    owner: UserModel;
     userId: number;
-
-    constructor(id: number, description: string, date: number, ratting: number, ownerFullName: string, userId: number, photoUrls?: string[], hasReplies?: boolean) {
-        this.id = id;
-        this.description = description;
-        this.date = date;
-        this.ratting = ratting;
-        this.photoUrls = photoUrls;
-        this.ownerFullName = ownerFullName;
-        this.userId  = userId;
-        this.hasReplies = hasReplies;
-    }
+    isReply: boolean;
+    replies: Review[];
+    reviewId: boolean;
 }

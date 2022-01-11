@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StoreReview.Core.Commands
 {
-    public class UpdateShopCommand : IRequest
+    public class UpdateShopCommand : IRequest<long>
     {
         public long Id { get; set; }
         [Required]

@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReviewsModule } from '../shared/reviews/reviews.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 const routes: Routes = [
   {
     path: '',
@@ -25,6 +26,7 @@ const routes: Routes = [
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

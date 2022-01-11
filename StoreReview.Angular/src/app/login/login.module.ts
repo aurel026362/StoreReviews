@@ -7,6 +7,9 @@ import { LoginComponent } from './login.component';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -15,9 +18,17 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatTabsModule
   ],
   declarations: [
+    LoginComponent
+  ],
+  entryComponents: [
+    LoginComponent
+  ],
+  exports: [
     LoginComponent
   ]
 })

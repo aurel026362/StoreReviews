@@ -12,7 +12,7 @@ namespace StoreReview.Core.DtoModels
         public bool HasReplies { get; set; }
         public DateTime Date { get; set; }
         public float? Ratting { get; set; }
-        public string OwnerFullName { get; set; }
+        public UserDto Owner { get; set; }
         public string UserId { get; set; }
         public long? CompanyId { get; set; }
         public long? ShopId { get; set; }

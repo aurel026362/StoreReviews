@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StoreReview.Core.CommandHandlers
 {
-    public class UpdateShopCommandHandler : IRequestHandler<UpdateShopCommand>
+    public class UpdateShopCommandHandler : IRequestHandler<UpdateShopCommand, long>
     {
         public readonly IRepository<Shop> _repository;
         public readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace StoreReview.Core.CommandHandlers
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task Handle(UpdateShopCommand request, CancellationToken cancellationToken)
+        public Task<long> Handle(UpdateShopCommand request, CancellationToken cancellationToken)
         {
             var shop = _repository.GetByIdOrThrowNotFound(request.Id);
 
@@ -33,11 +33,7 @@ namespace StoreReview.Core.CommandHandlers
             shop.CompanyId = request.CompanyId;
 
             _repository.Update(shop);
-        }
-
-        Task<Unit> IRequestHandler<UpdateShopCommand, Unit>.Handle(UpdateShopCommand request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(shop.Id);
         }
     }
 }

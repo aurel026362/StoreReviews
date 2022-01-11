@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { MatRippleModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatIconModule,
     MatDividerModule,
-    MatRippleModule
+    MatRippleModule,
+    MatChipsModule
   ],
   declarations: [
     ReviewsComponent

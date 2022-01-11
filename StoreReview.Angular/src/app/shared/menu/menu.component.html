@@ -1,18 +1,35 @@
 <div>
-  <div class="menu-item" style="cursor: unset;">
-    <i *ngIf="!isOpenMenu" style="margin-top: 20px;" class="fas fa-search  icon-item-menu pointer"
-      (click)="openMenu.emit();"></i>
-    <mat-form-field *ngIf="isOpenMenu" style="width:100%;">
-      <input matInput placeholder="Search">
-    </mat-form-field>
-  </div>
-  <div class="menu-item" routerLink="/">
-    <i class="fas fa-home icon-item-menu"></i>
-    <span *ngIf="isOpenMenu">Home</span>
-  </div>
-  <div class="menu-item" routerLink="/about">
-    <i class="fas fa-info icon-item-menu" style="
-    margin-left: 6px;"></i>
-    <span *ngIf="isOpenMenu">About</span>
-  </div>
+  <mat-list role="list">
+    <mat-list-item role="listitem">
+      <button mat-button *ngIf="!currentUserIsAuthenticated; else authenticatedUser" class="register-btn"
+        (click)="openLoginModal();">
+        <mat-icon>login</mat-icon> Login
+      </button>
+      <ng-template #authenticatedUser>
+        <span [matMenuTriggerFor]="menu" style="cursor: pointer;">
+          <!-- <span>O, Hi Mark!</span> -->
+          <img
+            [src]="currentUser.pictureUrl ? currentUser.pictureUrl : 'https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png'"
+            class="profile-picture">
+          <span>Hi {{currentUser?.firstName}}</span>
+        </span>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/profile']" (click)="emitClickEvent()">
+            <mat-icon>account_box</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </ng-template>
+    </mat-list-item>
+    <mat-list-item role="listitem" routerLink="/" class="list-item" (click)="emitClickEvent()">
+      <mat-icon>home</mat-icon> Home
+    </mat-list-item>
+    <mat-list-item role="listitem" routerLink="/about" class="list-item" (click)="emitClickEvent()">
+      <mat-icon>info</mat-icon> About
+    </mat-list-item>
+  </mat-list>
 </div>

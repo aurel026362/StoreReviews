@@ -1,52 +1,44 @@
 <div class="max-expanded">
-  <div class="title-panel">
-    <div style="float: left;padding: 15px 10px 10px 20px; color: white;">
-      <a *ngIf="!currentUserIsAuthenticated; else authenticatedUser" class="register-btn" routerLink="/login"><i
-          class="fas fa-sign-in-alt"></i><span style="margin-left:5px">Login Page</span></a>
-      <ng-template #authenticatedUser>
-        <span [matMenuTriggerFor]="menu" style="cursor: pointer;">
-          <!-- <span>O, Hi Mark!</span> -->
-          <span>O, Hi {{currentUser?.firstName + " " + currentUser?.lastName}}</span>
-        </span>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>account_box</mat-icon>
-            <span>My Profile</span>
-          </button>
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>logout</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </ng-template>
-    </div>
-    <a class="title" routerLink="/">{{title}}</a>
-  </div>
-  <div class="menu-and-content">
-    <div class="vertical-menu" [ngClass]="isOpenMenu?'menu-opened':'menu-closed'">
-      <button class="btn" (click)="menuToggle();"><i class="fas fa-bars"></i></button>
-      <app-menu [isOpenMenu]="isOpenMenu" (openMenu)="menuToggle();"></app-menu>
-    </div>
-    <div class="content" [ngClass]="{'min-content':isOpenMenu}">
-      <div class="main-content">
-        <router-outlet></router-outlet>
-      </div>
-      <div id="footer">
-        <div class="row" style="margin: 0px;">
-          <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
-            <img src="https://placeit.net/assets/backgrounds/logo.png" alt="no photo" style="width: 100px;margin-top: 20px;">
+
+  <div>
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #sidenav class="sidenav-menu" mode="push">
+        <app-menu (onListItemClick)="sidenav.close()"></app-menu>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <div class="title-panel">
+          <div style="float: left;padding: 10px 10px 10px 5px; color: white;">
+            <button mat-icon-button (click)="sidenav.toggle()" class="toggle-side-btn">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <div *ngIf="currentUserIsAuthenticated" class="is-authenticated"></div>
           </div>
-          <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
-            Pastel Rainbow <br>
-            Grey Lavender Colors
+          <a class="title" routerLink="/">{{title}}</a>
+        </div>
+        <div class="content">
+          <div class="main-content">
+            <router-outlet></router-outlet>
           </div>
-          <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
-            Never Doub <br>
-            Never Dreamed Of This
-            Uonto sdilo dsort
+          <div id="footer">
+            <div class="row" style="margin: 0px;">
+              <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
+                <img src="https://placeit.net/assets/backgrounds/logo.png" alt="no photo"
+                  style="width: 100px;margin-top: 20px;">
+              </div>
+              <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
+                Pastel Rainbow <br>
+                Grey Lavender Colors
+              </div>
+              <div class="col-md-4 col-xs-12" style="margin-bottom: 20px;">
+                Never Doub <br>
+                Never Dreamed Of This
+                Uonto sdilo dsort
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
   </div>
 </div>

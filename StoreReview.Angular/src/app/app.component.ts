@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from './services/auth.service';
-import { Router } from '@angular/router';
-import { UserModel } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -11,27 +9,15 @@ import { UserModel } from './models/user.model';
 })
 export class AppComponent {
   public title = 'myApp';
-  isOpenMenu = false;
-
-  get currentUser(): UserModel {
-    return this.authService.currentUser;
-  }
 
   get currentUserIsAuthenticated(): boolean {
     return this.authService.isAuthemticated;
   }
 
   constructor(public dialog: MatDialog,
-    private readonly authService: AuthService,
-    private readonly router: Router) {
+    private readonly authService: AuthService) {
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['./login']);
-  }
 
-  menuToggle() {
-    this.isOpenMenu = !this.isOpenMenu;
-  }
+
 }

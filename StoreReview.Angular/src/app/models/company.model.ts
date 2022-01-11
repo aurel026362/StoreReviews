@@ -6,4 +6,5 @@ export class Company {
     description: string;
     phone: string;
     webSite: string;
+    photoUrls: string[];
 }

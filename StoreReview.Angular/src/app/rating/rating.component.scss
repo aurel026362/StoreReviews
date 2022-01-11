@@ -1,34 +1,36 @@
-.view_toggles{
-    margin:10px 10px 10px 0px;
+.view_toggles {
+    margin: 10px 10px 10px 0px;
 }
 
-.view-table{
+.view-table {
     width: 100%;
-    .actions{
+    .actions {
         width: 10%;
         min-width: 160px;
     }
-    .description{
+    .description {
         width: 50%;
         padding: 5px;
     }
-    .view-item{
+    .view-item {
         cursor: pointer;
     }
-    .view-item:hover{
+    .view-item:hover {
         background-color: #dfe3ee;
     }
 }
 
-:host ::ng-deep{
-    .ratting-container{
-        .companySearch{
-            width: 20%;
-        }
-    }
-}
-.loading-spinner{
+.loading-spinner {
     height: 100vh;
     text-align: -webkit-center;
     padding-top: 20vh;
+}
+.mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+.more-details-btn {
+    position: absolute;
+    right: 30px;
+    margin: 5px;
 }

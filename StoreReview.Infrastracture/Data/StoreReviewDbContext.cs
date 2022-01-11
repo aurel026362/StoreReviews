@@ -20,12 +20,12 @@ namespace StoreReivew.Infrastracture.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<CompanyPhoto> CompanyPhotos { get; set; }
+        public DbSet<CompanyFile> CompanyPhotos { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<ShopReview> ShopReviews { get; set; }
         public DbSet<CompanyReview> CompanyReviews { get; set; }
-        public DbSet<ShopPhoto> ShopPhotos { get; set; }
-        public DbSet<ReviewPhoto> ReviewPhotos { get; set; }
+        public DbSet<ShopFile> ShopPhotos { get; set; }
+        public DbSet<File> Files { get; set; }
     }
 }

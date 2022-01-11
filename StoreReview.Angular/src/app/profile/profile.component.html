@@ -1,0 +1,50 @@
+<div *ngIf="currentUser; else isLoadingTemp" class="container-profile">
+    <div>
+        <img [src]="'https://scontent.ftce1-1.fna.fbcdn.net/v/t31.0-8/28701074_2012753165643150_4752221262599286374_o.jpg?_nc_cat=101&ccb=2&_nc_sid=09cbfe&_nc_ohc=umFN6yJIdfAAX-PfSkl&_nc_ht=scontent.ftce1-1.fna&oh=5380776859c4d03fc445052097e006c7&oe=6036E7F0'"
+            style="height: 30vh; width: 100%;
+        object-fit: cover;">
+        <div class="name-on-image">
+            <span class="user-name">{{currentUser.firstName + ' ' + currentUser.lastName}}</span>
+            <button mat-stroked-button class="edit-btn" [routerLink]="[currentRouteIsEditProfile?'/profile' :'./edit']"
+                (click)="refreshCurrentUserData()">{{getEditButtonName}}</button>
+        </div>
+
+    </div>
+    <div class="profile-data">
+        <div class="profile-image">
+            <img [src]="'https://scontent.ftce1-1.fna.fbcdn.net/v/t31.0-8/28701074_2012753165643150_4752221262599286374_o.jpg?_nc_cat=101&ccb=2&_nc_sid=09cbfe&_nc_ohc=umFN6yJIdfAAX-PfSkl&_nc_ht=scontent.ftce1-1.fna&oh=5380776859c4d03fc445052097e006c7&oe=6036E7F0'"
+                style="width: 100%;">
+        </div>
+        <div class="profile-data-properties">
+            <mat-list role="list">
+                <mat-list-item role="listitem"><span class="data-property-name">Full Name:</span> <span
+                        class="data-property-value">{{currentUser.firstName + ' ' + currentUser.lastName}}</span>
+                </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="currentUser.dateOfBirth">
+                    <span class="data-property-name">Date of Birth:</span>
+                    <span class="data-property-value">{{currentUser.dateOfBirth | date: "longDate"}}</span>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                    <!-- <span class="data-property-name">Role: </span>
+                    <span class="data-property-value">{{currentUser.roles[0]}}</span> -->
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                    <span class="data-property-name">Email: </span>
+                    <span class="data-property-value">{{currentUser.email}}</span>
+                </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="currentUser.phoneNumber">
+                    <span class="data-property-name">Phone: </span>
+                    <span class="data-property-value">{{currentUser.phoneNumber}}</span>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+    <div class="row profile-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<ng-template #isLoadingTemp>
+    <div>
+
+    </div>
+</ng-template>

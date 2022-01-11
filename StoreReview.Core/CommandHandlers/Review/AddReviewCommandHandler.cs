@@ -43,7 +43,7 @@ namespace StoreReview.Core.CommandHandlers
                 var createdReview = _companyRepository.Add(review);
                 return createdReview.Id;
             };
-            return await Task.FromResult(0);
+            throw new Exception("Invalidat Review Type");
         }
     }
 }

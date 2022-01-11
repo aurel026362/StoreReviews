@@ -4,10 +4,11 @@ using System.Text;
 
 namespace StoreReview.Core.Domain
 {
-    public class ReviewPhoto : Entity
+    public class ReviewFile : Entity
     {
-        public string Url { get; set; }
-        public long ReviewId { get; set; }
+        public File File { get; set; }
+        public long FileId { get; set; }
         public Review Review { get; set; }
+        public long ReviewId { get; set; }
     }
 }

@@ -13,6 +13,8 @@ export const CURRENT_USER_FIRST_NAME = "CURRENT_USER_FIRST_NAME";
 export const CURRENT_USER_LAST_NAME = "CURRENT_USER_LAST_NAME";
 export const CURRENT_USER_USERNAME = "CURRENT_USER_USERNAME";
 export const CURRENT_USER_ID = "CURRENT_USER_ID";
+export const CURRENT_USER_ROLES = "CURRENT_USER_ROLES";
+export const CURRENT_USER_PICTUREURL = "CURRENT_USER_PICTUREURL";
 
 @Injectable({
     providedIn: 'root'
@@ -25,11 +27,13 @@ export class AuthService {
         if (!this.isAuthemticated) {
             return null;
         }
-        const user:any = {
+        const user: any = {
             firstName: localStorage.getItem(CURRENT_USER_FIRST_NAME),
             lastName: localStorage.getItem(CURRENT_USER_LAST_NAME),
             username: localStorage.getItem(CURRENT_USER_USERNAME),
-            userId: Number(localStorage.getItem(CURRENT_USER_ID))
+            userId: Number(localStorage.getItem(CURRENT_USER_ID)),
+            roles: localStorage.getItem(CURRENT_USER_ROLES)?.split(','),
+            pictureUrl: localStorage.getItem(CURRENT_USER_PICTUREURL)
         };
         return user as UserModel;
     }
@@ -75,12 +79,16 @@ export class AuthService {
             );
     }
 
-    private setCurrentUser(data: UserModel):void{
+    private setCurrentUser(data: UserModel): void {
         localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
-        localStorage.setItem("CURRENT_USER_ID", data.userId.toString());
-        localStorage.setItem("CURRENT_USER_USERNAME", data.userName);
-        localStorage.setItem("CURRENT_USER_FIRST_NAME", data.firstName);
-        localStorage.setItem("CURRENT_USER_LAST_NAME", data.lastName);
+        localStorage.setItem(CURRENT_USER_ID, data.userId.toString());
+        localStorage.setItem(CURRENT_USER_USERNAME, data.userName);
+        localStorage.setItem(CURRENT_USER_FIRST_NAME, data.firstName);
+        localStorage.setItem(CURRENT_USER_LAST_NAME, data.lastName);
+        if (data.pictureUrl) {
+            localStorage.setItem(CURRENT_USER_PICTUREURL, data.pictureUrl);
+        }
+        localStorage.setItem(CURRENT_USER_ROLES, data.roles?.join(','));
     }
 
     get isAuthemticated(): boolean {
@@ -90,6 +98,5 @@ export class AuthService {
 
     logout(): void {
         localStorage.clear();
-        this.router.navigate(['']);
     }
 }

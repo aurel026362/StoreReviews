@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { delay } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 declare var FB: any;
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(private authService: AuthService,
-    private readonly httpClient: HttpClient,
+    public dialogRef: MatDialogRef<LoginComponent>,
     private formBuilder: FormBuilder,
     private readonly router: Router) {
 
@@ -55,7 +54,6 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm?.get('password').value;
     this.authService.login(userName, password)
       .subscribe(() => {
-        this.router.navigate(['/'])
       }, error => {
         this.errorMessage = 'Incorrect username or password!'
       })
@@ -69,7 +67,6 @@ export class LoginComponent implements OnInit {
     model.roles = ['User'];
 
     this.authService.register(model).subscribe(data => {
-      this.router.navigate(['/']);
     }, () => alert("Something wrong!"));
   }
 
@@ -77,7 +74,7 @@ export class LoginComponent implements OnInit {
   private initializeFacebookRequest(): void {
     (window as any).fbAsyncInit = function () {
       FB.init({
-        appId: '',
+        appId: '415178986204040',
         cookie: true,
         xfbml: true,
         version: 'v9.0'
@@ -102,8 +99,8 @@ export class LoginComponent implements OnInit {
       this.authService.loginWithFacebook(respone.authResponse.accessToken)
         .subscribe((data) => {
           console.log("succcessSssss", data);
-          this.router.navigate(['/'])
-          // window.location.href = window.location.href.replace("/login", "");
+          // this.dialogRef.close();
+            window.location.href = window.location.href;
         }, error => {
           console.log("errorrrrr");
           this.errorMessage = 'Incorrect username or password!'

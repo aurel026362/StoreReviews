@@ -4,3 +4,8 @@ export class PagedResultModel<T> {
     pageSize: number;
     results: T[];
 }
+
+export class InputPageResultModel {
+    page: number;
+    pageSize: number;
+}

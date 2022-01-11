@@ -23,7 +23,9 @@ import { STORE_REVIEW_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from "@auth0/angular-jwt";
 import { ACCESS_TOKEN_KEY, AuthService } from './services/auth.service';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon'; 
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -45,6 +47,8 @@ export function tokenGetter() {
     RatingModule,
     LoginModule,
     MatIconModule,
+    MatSidenavModule,
+    MatListModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,

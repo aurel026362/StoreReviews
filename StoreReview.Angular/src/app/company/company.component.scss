@@ -11,8 +11,14 @@
 .padding-10 {
     padding: 10px;
 }
-.loading-spinner{
+.loading-spinner {
     height: 100vh;
     text-align: -webkit-center;
     padding-top: 20vh;
+}
+:host ::ng-deep {
+    .mat-icon {
+        font-size: 18px;
+        vertical-align: middle;
+    }
 }

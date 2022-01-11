@@ -13,6 +13,6 @@ namespace StoreReview.Core.Domain
         public string WebSite { get; set; }
         public IEnumerable<Shop> Shops { get; set; }
         public IEnumerable<CompanyReview> Reviews { get; set; }
-        public IEnumerable<CompanyPhoto> Photos { get; set; }
+        public IEnumerable<File> Photos { get; set; }
     }
 }

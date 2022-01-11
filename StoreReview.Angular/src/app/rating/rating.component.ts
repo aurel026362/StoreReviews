@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { delay } from 'rxjs/operators';
 import { Company } from '../models/company.model';
 import { Shop } from '../models/shop.model';
+import { AuthService } from '../services/auth.service';
+import { CompanyService } from '../services/company.service';
 import { StoreService } from '../services/store.service';
 import { AddEditCompanyDialogComponent } from '../shared/modals/add-edit-company-modal/add-edit-company-modal.component';
 import { AddEditShopDialogComponent } from '../shared/modals/add-edit-shop-modal/add-edit-shop-modal.component';
@@ -33,18 +35,20 @@ export class RatingComponent implements OnInit {
   companiesForChart = [];
   isLoading = true;
 
+  get currentUserIsAdmin(): boolean {
+    return this.authService.currentUser?.roles.includes('Admin');
+  }
+
   constructor(private readonly httpClient: HttpClient,
     private readonly shopService: StoreService,
+    private readonly companyService: CompanyService,
+    private readonly authService: AuthService,
     private dialog: MatDialog) {
-    this.httpClient.get<Company[]>('https://localhost:5001/api/companies').subscribe(data => {
-      this.isLoading = false;
-      this.companies = data;
-      this.initialCompanies = [...data];
-      this.companiesForChart = data.slice(0, 15).map(x => ({ extra: x.id, name: x.name, value: Math.floor(Math.random() * 10) + 1 }));
-    })
+    this.loadCompanies();
   }
 
   ngOnInit() {
+    console.log('curretn user ', this.authService.currentUser);
     this.companySearch.valueChanges.pipe(delay(800)).subscribe(data => {
       if (data) {
         this.companies = this.initialCompanies.filter(x =>
@@ -54,6 +58,17 @@ export class RatingComponent implements OnInit {
       } else {
         this.companies = [...this.initialCompanies];
       }
+    });
+  }
+
+  loadCompanies(): void {
+    this.isLoading = true;
+    this.companyService.getCompaies().subscribe(data => {
+      this.isLoading = false;
+      this.companies = data;
+      this.initialCompanies = [...data];
+      this.companiesForChart = data.filter(x=>x.ratting).slice(0, 15).map(x => ({ extra: x.id, name: x.name, value: x.ratting }));
+      // value: Math.floor(Math.random() * 10) + 1 
     });
   }
 
@@ -71,6 +86,9 @@ export class RatingComponent implements OnInit {
         width: '400px'
       });
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadCompanies();
+      }
     });
   }
 
@@ -84,6 +102,28 @@ export class RatingComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadCompanies();
+      }
+    });
+  }
+
+  deleteCompany(companyId: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent,
+      {
+        width: '400px',
+        data: {
+          title: 'Warning',
+          message: 'Are you sure you want to delete this company?'
+        }
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.companyService.deleteCompany(companyId).subscribe(() => {
+          this.loadCompanies();
+        });
+      }
     });
   }
 
@@ -131,7 +171,9 @@ export class RatingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.shopService.deleteShop(shopId).subscribe();
+        this.shopService.deleteShop(shopId).subscribe(() => {
+          this.loadShops(this.selectedCompanyId);
+        });
       }
     });
   }

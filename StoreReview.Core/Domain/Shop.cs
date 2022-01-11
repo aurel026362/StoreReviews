@@ -11,7 +11,7 @@ namespace StoreReview.Core.Domain
         public string Phone { get; set; }
         public long CompanyId { get; set; }
         public Company Company { get; set; }
-        public ShopReview[] Reviews { get; set; }
-        public ShopPhoto[] Photos { get; set; }
+        public IEnumerable<ShopReview> Reviews { get; set; }
+        public IEnumerable<File> Photos { get; set; }
     }
 }

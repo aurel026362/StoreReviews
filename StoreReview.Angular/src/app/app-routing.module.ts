@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
-import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { AuthGuard } from './guard/auth.guard';
 import { AppComponent } from './app.component';
@@ -26,16 +25,20 @@ const routes: Routes = [
     }]
   },
   {
+    path: 'profile',
+    children: [{
+      path: '',
+      loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+      canActivate: [AuthGuard]
+    }]
+  },
+  {
     path: 'about',
     component: AboutComponent
   },
   {
     path: '',
     component: AppComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   },
   {
     path: '**',

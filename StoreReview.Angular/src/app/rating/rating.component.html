@@ -6,7 +6,7 @@
         <input matInput [formControl]="companySearch" placeholder="Search">
       </mat-form-field>
     </div>
-    <button mat-raised-button style="margin: 20px; height: 48px;" (click)="addCompany()">
+    <button *ngIf="currentUserIsAdmin" mat-raised-button style="margin: 20px; height: 48px;" (click)="addCompany()">
       <mat-icon>add_circle</mat-icon>
       <span>Add Company</span>
     </button>
@@ -19,15 +19,23 @@
         </mat-panel-title>
         <mat-panel-description style="width: 55%;">
           {{company.phone}}
+          <div *ngIf="currentUserIsAdmin" (click)="$event.stopPropagation()">
+            <button mat-button (click)="editCompany(company.id)">
+              <mat-icon mat-button>edit</mat-icon>
+            </button>
+            <button mat-button (click)="deleteCompany(company.id)">
+              <mat-icon mat-button>delete</mat-icon>
+            </button>
+          </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
+      <button mat-raised-button [routerLink]="['./company',company.id]" class="more-details-btn">More Details</button>
       <p>Ratting: {{company.ratting}}</p>
-      <p>
-        {{company.description}}
-      </p>
+      <p [innerHTML]="company.webSite | linkify"></p>
+      <p [innerHTML]="company.description | linkify"></p>
       <div class="row view_toggles">
         <div class="col-12" style="text-align: -webkit-right;">
-          <button mat-raised-button style="float: left; height: 48px;" (click)="addShop()">
+          <button *ngIf="currentUserIsAdmin" mat-raised-button style="float: left; height: 48px;" (click)="addShop()">
             <mat-icon>add_circle</mat-icon>
             <span>Add Shop</span>
           </button>
@@ -50,7 +58,8 @@
                 <mat-card-title>{{shop.address}}</mat-card-title>
                 <mat-card-subtitle>{{shop.phone}}</mat-card-subtitle>
               </mat-card-header>
-              <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+              <img mat-card-image src="https://i.simpalsmedia.com/content/gallery/original/109eb14e5c1aab77cbabb6e9652081f4.jpg"
+                alt="Photo of a Shiba Inu">
               <mat-card-content>
                 <p>
                   {{shop.description}}
@@ -63,10 +72,10 @@
                 <button mat-button>
                   <mat-icon>share</mat-icon>
                 </button>
-                <button mat-button (click)="editShop(shop.id)">
+                <button *ngIf="currentUserIsAdmin" mat-button (click)="editShop(shop.id)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-button (click)="deleteShop(shop.id)">
+                <button *ngIf="currentUserIsAdmin" mat-button (click)="deleteShop(shop.id)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </mat-card-actions>
@@ -106,10 +115,10 @@
                   <button mat-button>
                     <mat-icon>share</mat-icon>
                   </button>
-                  <button mat-button style="float: right;" (click)="editShop(element.id)">
+                  <button *ngIf="currentUserIsAdmin" mat-button style="float: right;" (click)="editShop(element.id)">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-button style="float: right;" (click)="deleteShop(element.id)">
+                  <button *ngIf="currentUserIsAdmin" mat-button style="float: right;" (click)="deleteShop(element.id)">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </td>

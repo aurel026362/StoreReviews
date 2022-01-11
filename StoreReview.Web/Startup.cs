@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +15,7 @@ using StoreReview.Core.AutoMapperProfiles;
 using StoreReview.Core.Domain;
 using StoreReview.Core.Interfaces;
 using StoreReview.Core.Queries;
+using StoreReview.Core.Services;
 using StoreReview.Web.External.Contracts;
 using StoreReview.Web.Services;
 
@@ -30,7 +30,6 @@ namespace StoreReview.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -57,7 +56,7 @@ namespace StoreReview.Web
 
                         ValidateLifetime = true,
 
-                        IssuerSigningKey = authOptions.GetSymetricSecurityKey(), //HS256
+                        IssuerSigningKey = authOptions.GetSymetricSecurityKey(), 
                         ValidateIssuerSigningKey = true
                     };
                 }).AddFacebook(options =>
@@ -107,6 +106,10 @@ namespace StoreReview.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StoreReview API", Version = "v1" });
             });
+
+
+            services.AddScoped<IFileService>(o => new FileService("/files"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

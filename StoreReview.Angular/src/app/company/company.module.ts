@@ -10,6 +10,7 @@ import { ReviewsModule } from '../shared/reviews/reviews.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LinkifyModule } from '../shared/pipe/linkify.module';
 const routes: Routes = [
   {
     path: '',
@@ -27,7 +28,8 @@ const routes: Routes = [
     MatDividerModule,
     MatIconModule,
     RouterModule.forChild(routes),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LinkifyModule
   ],
   declarations: [
     CompanyComponent

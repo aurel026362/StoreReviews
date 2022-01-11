@@ -20,12 +20,13 @@ namespace StoreReview.Core.CommandHandlers
             _companyPhotoRepository = companyPhotoRepository;
         }
 
-        public Task<long> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)
         {
             var companyPhotos = _companyPhotoRepository.Read().Where(x => x.CompanyId == request.Id).ToList();
             _companyPhotoRepository.DeleteRange(companyPhotos);
-            _companyRepository.DeleteById(request.Id);
-            return Task.FromResult(request.Id);
+            await _companyRepository.DeleteByIdAsync(request.Id);
+
+            return request.Id;
         }
     }
 }

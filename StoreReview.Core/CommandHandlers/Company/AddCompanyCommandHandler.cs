@@ -22,10 +22,10 @@ namespace StoreReview.Core.CommandHandlers
             _mapper = mapper;
         }
 
-        public Task<long> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
             var company = _mapper.Map<Company>(request);
-            var createdCompany = _companyRepository.Add(company);
+            var createdCompany = await _companyRepository.AddAsync(company);
 
             if (request.PhotoUrls?.Count > 0)
             {
@@ -38,7 +38,7 @@ namespace StoreReview.Core.CommandHandlers
                     //});
                 }
             }
-            return Task.FromResult(createdCompany.Id);
+            return createdCompany.Id;
         }
     }
 }

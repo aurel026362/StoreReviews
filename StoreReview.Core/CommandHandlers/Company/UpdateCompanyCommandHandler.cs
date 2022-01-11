@@ -48,7 +48,7 @@ namespace StoreReview.Core.CommandHandlers
                     //});
                 }
             }
-            return await Task.FromResult(company.Id);
+            return company.Id;
         }
     }
 }

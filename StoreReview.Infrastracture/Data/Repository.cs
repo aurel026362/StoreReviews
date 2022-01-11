@@ -4,6 +4,7 @@ using StoreReview.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StoreReivew.Infrastracture.Data
 {
@@ -18,32 +19,40 @@ namespace StoreReivew.Infrastracture.Data
             //this.currentUser = currentUser;
         }
 
-        public T GetById(long id)
-        {
-            return _dbContext.Set<T>().SingleOrDefault(e => e.Id == id);
-        }
+        public T GetById(long id) =>
+            _dbContext.Set<T>().SingleOrDefault(e => e.Id == id);
 
-        public T GetByIdOrThrowNotFound(long id)
-        {
-            return _dbContext.Set<T>().SingleOrDefault(e => e.Id == id);
-        }
+        public async Task<T> GetByIdAsync(long id) =>
+            await _dbContext.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
 
-        public virtual IQueryable<T> Read() => _dbContext.Set<T>().OrderBy(x => x.Id);
+        public async Task<T> GetByIdOrThrowNotFoundAsync(long id) =>
+            await GetByIdAsync(id)
+            ?? throw new DllNotFoundException($"Could not find an entity with id: {id}");
 
-        public IQueryable<T> ReadSql(string query)
-        {
-            return _dbContext.Set<T>().FromSqlRaw(query);
-        }
+        public virtual IQueryable<T> Read() =>
+            _dbContext.Set<T>().OrderBy(x => x.Id);
 
-        public List<T> GetAll()
-        {
-            return _dbContext.Set<T>().ToList();
-        }
+        public IQueryable<T> ReadSql(string query) =>
+            _dbContext.Set<T>().FromSqlRaw(query);
+
+        public List<T> GetAll() =>
+            _dbContext.Set<T>().ToList();
+
+        public async Task<List<T>> GetAllAsync() =>
+            await _dbContext.Set<T>().ToListAsync();
 
         public T Add(T entity)
         {
             _dbContext.Set<T>().Add(entity);
             _dbContext.SaveChanges();
+
+            return entity;
+        }
+
+        public async Task<T> AddAsync(T entity)
+        {
+            await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
 
             return entity;
         }
@@ -54,9 +63,15 @@ namespace StoreReivew.Infrastracture.Data
             _dbContext.SaveChanges();
         }
 
-        public void DeleteById(long id)
+        public async Task DeleteAsync(T entity)
         {
-            T entity = GetByIdOrThrowNotFound(id);
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteByIdAsync(long id)
+        {
+            T entity = await GetByIdOrThrowNotFoundAsync(id);
             _dbContext.Set<T>().Remove(entity);
             _dbContext.SaveChanges();
         }
@@ -75,6 +90,12 @@ namespace StoreReivew.Infrastracture.Data
             _dbContext.SaveChanges();
         }
 
+        public async Task UpdateAsync(T entity)
+        {
+            _dbContext.Update(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public IEnumerable<T> AddRange(IEnumerable<T> entities)
         {
             var list = entities.ToList();
@@ -89,6 +110,6 @@ namespace StoreReivew.Infrastracture.Data
             _dbContext.Set<T>().RemoveRange(entities);
             _dbContext.SaveChanges();
         }
-        
+
     }
 }

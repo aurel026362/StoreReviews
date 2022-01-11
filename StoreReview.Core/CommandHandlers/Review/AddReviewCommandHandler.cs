@@ -32,7 +32,7 @@ namespace StoreReview.Core.CommandHandlers
                 var review = _mapper.Map<ShopReview>(request);
                 review.UserId = (long)_currentUser.Id;
                 review.Date = DateTime.Now;
-                var createdReview = _shopRepository.Add(review);
+                var createdReview = await _shopRepository.AddAsync(review);
                 return createdReview.Id;
             }
             else if (request.ReviewType == ReviewType.Company && request.CompanyId.HasValue)
@@ -40,7 +40,7 @@ namespace StoreReview.Core.CommandHandlers
                 var review = _mapper.Map<CompanyReview>(request);
                 review.UserId = (long)_currentUser.Id;
                 review.Date = DateTime.Now;
-                var createdReview = _companyRepository.Add(review);
+                var createdReview = await _companyRepository.AddAsync(review);
                 return createdReview.Id;
             };
             throw new Exception("Invalidat Review Type");

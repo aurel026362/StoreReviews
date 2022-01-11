@@ -22,7 +22,7 @@ namespace StoreReview.Core.CommandHandlers
         public async Task<long> Handle(CreateShopCommand request, CancellationToken cancellationToken)
         {
             var newShop = _mapper.Map<Shop>(request);
-            var createdShop = _repository.Add(newShop);
+            var createdShop = await _repository.AddAsync(newShop);
             return createdShop.Id;
         }
     }

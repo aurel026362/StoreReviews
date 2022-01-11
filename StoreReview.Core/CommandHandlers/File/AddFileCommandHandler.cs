@@ -26,7 +26,8 @@ namespace StoreReview.Core.CommandHandlers
         public async Task<FileDto> Handle(AddFileCommand request, CancellationToken cancellationToken)
         {
             var newFile = _mapper.Map<File>(request);
-            var createdFile = _repository.Add(newFile);
+            var createdFile = await _repository.AddAsync(newFile);
+
             return _mapper.Map<FileDto>(createdFile);
         }
     }

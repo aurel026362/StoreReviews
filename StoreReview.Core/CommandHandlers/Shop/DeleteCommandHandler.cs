@@ -18,10 +18,10 @@ namespace StoreReview.Core.CommandHandlers
             _repository = repository;
             _mapper = mapper;
         }
-        public Task<long> Handle(DeleteShopCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(DeleteShopCommand request, CancellationToken cancellationToken)
         {
-            _repository.DeleteById(request.Id);
-            return Task.FromResult(request.Id);
+            await _repository.DeleteByIdAsync(request.Id);
+            return request.Id;
         }
     }
 }

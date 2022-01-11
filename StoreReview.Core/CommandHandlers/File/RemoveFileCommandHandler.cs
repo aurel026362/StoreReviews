@@ -24,7 +24,7 @@ namespace StoreReview.Core.CommandHandlers
 
         public async Task<long> Handle(RemoveFileCommand message, CancellationToken cancellationToken)
         {
-            var file = _repository.GetByIdOrThrowNotFound(message.FileId);
+            var file = await _repository.GetByIdOrThrowNotFoundAsync(message.FileId);
 
             _fileService.DeleteAsync(file.Path);
 

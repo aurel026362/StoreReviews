@@ -23,17 +23,17 @@ namespace StoreReview.Core.CommandHandlers
             _repository = repository;
             _mapper = mapper;
         }
-        public Task<long> Handle(UpdateShopCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(UpdateShopCommand request, CancellationToken cancellationToken)
         {
-            var shop = _repository.GetByIdOrThrowNotFound(request.Id);
+            var shop = await _repository.GetByIdOrThrowNotFoundAsync(request.Id);
 
             shop.Address = request.Address;
             shop.Phone = request.Phone;
             shop.Description = request.Description;
             shop.CompanyId = request.CompanyId;
 
-            _repository.Update(shop);
-            return Task.FromResult(shop.Id);
+            await _repository.UpdateAsync(shop);
+            return shop.Id;
         }
     }
 }

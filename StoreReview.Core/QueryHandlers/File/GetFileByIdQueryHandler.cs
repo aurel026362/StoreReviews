@@ -21,7 +21,7 @@ namespace StoreReview.Core.QueryHandlers
         }
         public async Task<FileDto> Handle(GetFileByIdQuery request, CancellationToken cancellationToken)
         {
-            var file = _repository.GetByIdOrThrowNotFound(request.FileId);
+            var file = await _repository.GetByIdOrThrowNotFoundAsync(request.FileId);
             var fileDto = _mapper.Map<FileDto>(file);
             return fileDto;
         }

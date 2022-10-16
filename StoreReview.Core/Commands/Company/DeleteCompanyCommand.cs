@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreReview.Core.Commands
 {
-    public class DeleteCompanyCommand : IRequest<long>
+    public class DeleteCompanyCommand : IRequest
     {
         public long Id { get; set; }
     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StoreReview.Core.CommandHandlers
 {
-    public class RemoveFileCommandHandler : IRequestHandler<RemoveFileCommand, long>
+    public class RemoveFileCommandHandler : IRequestHandler<RemoveFileCommand>
     {
         private readonly IRepository<File> _repository;
         private readonly IFileService _fileService;
@@ -22,14 +22,15 @@ namespace StoreReview.Core.CommandHandlers
             _mapper = mapper;
         }
 
-        public async Task<long> Handle(RemoveFileCommand message, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RemoveFileCommand message, CancellationToken cancellationToken)
         {
             var file = await _repository.GetByIdOrThrowNotFoundAsync(message.FileId);
 
-            _fileService.DeleteAsync(file.Path);
+            await _fileService.DeleteAsync(file.Path);
 
             _repository.Delete(file);
-            return file.Id;
+
+            return Unit.Value;
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StoreReview.Core.CommandHandlers
 {
-    public class DeleteCompanyCommandHandler : IRequestHandler<DeleteCompanyCommand, long>
+    public class DeleteCompanyCommandHandler : IRequestHandler<DeleteCompanyCommand>
     {
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<CompanyFile> _companyPhotoRepository;
@@ -20,13 +20,13 @@ namespace StoreReview.Core.CommandHandlers
             _companyPhotoRepository = companyPhotoRepository;
         }
 
-        public async Task<long> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)
         {
             var companyPhotos = _companyPhotoRepository.Read().Where(x => x.CompanyId == request.Id).ToList();
             _companyPhotoRepository.DeleteRange(companyPhotos);
             await _companyRepository.DeleteByIdAsync(request.Id);
 
-            return request.Id;
+            return Unit.Value;
         }
     }
 }

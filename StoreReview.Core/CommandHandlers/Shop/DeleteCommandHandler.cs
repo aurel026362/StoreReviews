@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StoreReview.Core.CommandHandlers
 {
-    public class DeleteShopCommandHandler : IRequestHandler<DeleteShopCommand, long>
+    public class DeleteShopCommandHandler : IRequestHandler<DeleteShopCommand>
     {
         public readonly IRepository<Shop> _repository;
         public readonly IMapper _mapper;
@@ -18,10 +18,10 @@ namespace StoreReview.Core.CommandHandlers
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<long> Handle(DeleteShopCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteShopCommand request, CancellationToken cancellationToken)
         {
             await _repository.DeleteByIdAsync(request.Id);
-            return request.Id;
+            return Unit.Value;
         }
     }
 }

@@ -17,8 +17,6 @@ namespace StoreReivew.Infrastracture.Data
         {
         }
 
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyFile> CompanyPhotos { get; set; }
         public DbSet<Review> Reviews { get; set; }

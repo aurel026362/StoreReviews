@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { AuthGuard } from './guard/auth.guard';
 import { AppComponent } from './app.component';
+import { ContactsComponent } from './contacts/contacts.component';
 const routes: Routes = [
   {
     path: '',
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
+  },
+  {
+    path: 'contacts',
+    component: ContactsComponent
   },
   {
     path: '',

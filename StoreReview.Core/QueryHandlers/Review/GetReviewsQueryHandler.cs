@@ -68,12 +68,12 @@ namespace StoreReview.Core.QueryHandlers
             {
                 throw new Exception("Invalid Review Type");
             }
-            var reviewsDto = _mapper.Map<IList<ReviewDto>>(reviews.ToList());
+            var reviewsDto = _mapper.Map<IList<ReviewDto>>(await reviews.ToListAsync());
             var response = new PagedResultDto<ReviewDto>()
             {
                 PageSize = request.InputPage.PageSize,
                 CurrentPage = request.InputPage.Page,
-                TotalPages = (int)Math.Ceiling((decimal)reviewTotalCount / (decimal)request.InputPage.PageSize),
+                TotalPages = (int)Math.Ceiling(reviewTotalCount / (decimal)request.InputPage.PageSize),
                 Results = reviewsDto
             };
             return response;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreReview.Core.Commands
 {
-    public class RemoveFileCommand : IRequest<long>
+    public class RemoveFileCommand : IRequest
     {
         public long FileId { get; set; }
     }

@@ -85,53 +85,46 @@ namespace StoreReview.Web.Services
         public async Task<AuthenticationResultViewModel> Register(RegisterViewModel input, bool isExternalAuth = false)
         {
             var message = "User already registered!";
-            try
+
+            User user = await _userManager.FindByNameAsync(input.UserName);
+            if (user == null)
             {
-
-                User user = await _userManager.FindByNameAsync(input.UserName);
-                if (user == null)
+                user = new User()
                 {
-                    user = new User()
-                    {
-                        UserName = input.UserName,
-                        Email = input.Email,
-                        FirstName = input.FirstName,
-                        LastName = input.LastName
-                    };
-                    IdentityResult result;
-                    if (!isExternalAuth)
-                    {
-                        result = await _userManager.CreateAsync(user, input.Password);
-                    }
-                    else
-                    {
-
-                        result = await _userManager.CreateAsync(user);
-                    }
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception(string.Concat(result.Errors));
-                    }
-                    await _userManager.AddToRolesAsync(user, input.Roles);
-                    var accessToken = await GenerateJWT(user);
-                    return new AuthenticationResultViewModel
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        UserId = user.Id,
-                        UserName = user.UserName,
-                        AccessToken = accessToken
-                    };
+                    UserName = input.UserName,
+                    Email = input.Email,
+                    FirstName = input.FirstName,
+                    LastName = input.LastName
+                };
+                IdentityResult result;
+                if (!isExternalAuth)
+                {
+                    result = await _userManager.CreateAsync(user, input.Password);
                 }
                 else
                 {
-                    throw new Exception(message);
+
+                    result = await _userManager.CreateAsync(user);
                 }
+                if (!result.Succeeded)
+                {
+                    throw new Exception(string.Concat(result.Errors));
+                }
+                await _userManager.AddToRolesAsync(user, input.Roles);
+                var accessToken = await GenerateJWT(user);
+                return new AuthenticationResultViewModel
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    AccessToken = accessToken
+                };
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                throw new Exception(message);
             }
         }
 

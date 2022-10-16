@@ -32,7 +32,7 @@
 }
 
 .max-expanded {
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
 }
 
@@ -45,7 +45,7 @@
 }
 .main-content {
   background-color: rgb(250 250 250);
-  min-height: 100vh;
+  min-height: calc(100vh - 143px);
   min-width: 400px;
   margin-top: 50px;
 }
